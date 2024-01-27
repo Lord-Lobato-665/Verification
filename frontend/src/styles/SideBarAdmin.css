@@ -1,0 +1,27 @@
+.logo_image{
+    height: 100px;
+    width: 100px;
+}
+
+.logo_general{
+    height: 100%;
+    width: 100%;
+}
+.sidebar{
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width:240px;
+    background-color: #023047;
+    padding: 6px 14px;
+    
+}
+
+.sidebar .logo_content .logo{
+    color: #fff;
+    display: flex;
+    height: 50px;
+    width: 100%;
+    align-items: center;
+}
