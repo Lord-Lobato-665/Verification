@@ -1,6 +1,6 @@
 import {BrowserRouter,Route,Routes} from "react-router-dom";
 import HomeAdmin from "./Pages/HomeAdmin";
-import ResourcesAdmin from "./Pages/ResourcesAdmin"
+import PageNotFound from "./Pages/404";
 function App() {
 
 
@@ -9,15 +9,9 @@ function App() {
     <BrowserRouter>
     <Routes>
       <Route path="/" element={<HomeAdmin/>} />
-      <Route path="/resources" element={<ResourcesAdmin/>} />
-
+      <Route path="/404" element={<PageNotFound/>} />
     </Routes>
-    
-    
-    
     </BrowserRouter>
-
-    
     </>
   )
 }
