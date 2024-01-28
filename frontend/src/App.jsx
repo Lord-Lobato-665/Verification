@@ -1,5 +1,6 @@
 import {BrowserRouter,Route,Routes} from "react-router-dom";
 import HomeAdmin from "./Pages/HomeAdmin";
+import ResourcesAdmin from "./Pages/ResourcesAdmin"
 function App() {
 
 
@@ -8,6 +9,8 @@ function App() {
     <BrowserRouter>
     <Routes>
       <Route path="/" element={<HomeAdmin/>} />
+      <Route path="/resources" element={<ResourcesAdmin/>} />
+
     </Routes>
     
     

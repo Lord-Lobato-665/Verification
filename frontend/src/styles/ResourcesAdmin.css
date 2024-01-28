@@ -1,0 +1,4 @@
+.cont-re{
+    display: grid;
+    grid-template-columns: 240px auto;
+}
