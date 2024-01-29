@@ -1,4 +1,4 @@
-import React from "react";
+
 import { Link } from "react-router-dom";
 import { GrResources } from "react-icons/gr";
 import { AiOutlineFundProjectionScreen } from "react-icons/ai";
@@ -13,7 +13,9 @@ function SideBarAdmin() {
         <>
             <div className="sidebar">
                 <div className="container-nombre">
+                    <Link to="/">
                     <h1 className="sidebar-nombre">Task Unity</h1>
+                    </Link>
                 </div>
                 <div>
                     <div className="logo-container">
@@ -22,7 +24,7 @@ function SideBarAdmin() {
                 </div>
                 <ul className="nav_list desing-list">
                     <li className="contain-li">
-                        <Link to="/404" className="link-container">
+                        <Link to="/resources" className="link-container">
                             <span>Recursos</span>
                             <GrResources className="icon-sidebar" />
                         </Link>

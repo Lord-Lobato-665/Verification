@@ -1,13 +1,13 @@
-import SideProvicional from "../components/SideProvicional"
-import ResourcesTable from "./ResourcesTable"
+import SideBarAdmin from "../components/SideBarAdmin"
+import ResourcesTable from "../components/ResourcesTable"
+import HeaderAdmin from "../components/HeaderAdmin"
 import "../styles/ResourcesAdmin.css"
 const ResourcesAdmin = () => {
   return (
     <>
-    <div className="cont-re">
-    <SideProvicional/>
+   <HeaderAdmin/>
+<SideBarAdmin/>
     <ResourcesTable/>
-    </div>
 
     </>
   )

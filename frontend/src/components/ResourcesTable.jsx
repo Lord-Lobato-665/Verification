@@ -1,6 +1,8 @@
 import "../styles/ResourcesTable.css";
 import { FaSearch } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { FaPencilAlt } from "react-icons/fa";
+import { FaTrashAlt } from "react-icons/fa";
 
 
 const ResourcesTable = () => {
@@ -14,7 +16,7 @@ const ResourcesTable = () => {
             <input type="search" placeholder="Buscar Recurso"  className="input-resource"/>
             <FaSearch size={20} />
             </div>
-                <Link className="btn-add-resource">Agregar</Link>
+                <Link to="/resources/add" className="btn-add-resource">Agregar</Link>
           </div>
           <div className="cont-table-resource">
             <div className="margin-table-resources">
@@ -24,12 +26,8 @@ const ResourcesTable = () => {
                 <th className="head-table-resource">Tipo del recurso</th>
                 <th className="head-table-resource">Cantidad del recurso</th>
                 <th className="head-table-resource">Estado del recurso</th>
-            </tr>
-            <tr>
-                <td className="body-table-resource">Laptop</td>
-                <td className="body-table-resource">Hardware</td>
-                <td className="body-table-resource">5</td>
-                <td className="body-table-resource">Disponible</td>
+                <th className="head-table-resource">Editar</th>
+                <th className="head-table-resource">Eliminar</th>
 
             </tr>
             <tr>
@@ -37,6 +35,24 @@ const ResourcesTable = () => {
                 <td className="body-table-resource">Hardware</td>
                 <td className="body-table-resource">5</td>
                 <td className="body-table-resource">Disponible</td>
+                <td className="body-table-resource"><Link className="edit-trash-resource" to="/resources/edit"><FaPencilAlt /></Link>
+</td>
+<td className="body-table-resource"><Link className="edit-trash-resource" to="/resources/delete" ><FaTrashAlt/></Link>
+</td>
+             
+               
+
+
+            </tr>
+            <tr>
+                <td className="body-table-resource">Laptop</td>
+                <td className="body-table-resource">Hardware</td>
+                <td className="body-table-resource">5</td>
+                <td className="body-table-resource">Disponible</td>
+                <td className="body-table-resource"><Link className="edit-trash-resource" to="/resources/edit"><FaPencilAlt /></Link>
+</td>
+<td className="body-table-resource"><Link className="edit-trash-resource" to="/resources/delete"><FaTrashAlt/></Link>
+</td>
 
             </tr>
           </table>
