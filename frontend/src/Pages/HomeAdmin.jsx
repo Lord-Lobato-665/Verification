@@ -5,6 +5,9 @@ const HomeAdmin = () => {
     <>
     <SideBarAdmin/>
     <HeaderAdmin/>
+    <div className="inicio-admin-container">
+      Bienvenidos al dash board
+    </div>
     </>
   )
 }

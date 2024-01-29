@@ -28,7 +28,6 @@ const ResourcesTable = () => {
                 <th className="head-table-resource">Estado del recurso</th>
                 <th className="head-table-resource">Editar</th>
                 <th className="head-table-resource">Eliminar</th>
-
             </tr>
             <tr>
                 <td className="body-table-resource">Laptop</td>

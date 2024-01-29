@@ -13,13 +13,15 @@ function SideBarAdmin() {
         <>
             <div className="sidebar">
                 <div className="container-nombre">
-                    <Link to="/">
+                    <Link to="/Admin">
                     <h1 className="sidebar-nombre">Task Unity</h1>
                     </Link>
                 </div>
                 <div>
                     <div className="logo-container">
+                        <Link to="/Admin">
                         <img src={LogoTaskUnity} alt="img" className="logo-img" />
+                        </Link>
                     </div>
                 </div>
                 <ul className="nav_list desing-list">
