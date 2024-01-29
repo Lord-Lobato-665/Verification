@@ -1,6 +1,5 @@
 import "../styles/HeaderAdmin.css";
 import { FaSearch } from "react-icons/fa";
-import Notification from "../images/notificaciones.png";
 import Perfil from "../images/perfil.jpg";
 import { IoIosNotifications } from "react-icons/io";
 
