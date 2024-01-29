@@ -1,0 +1,48 @@
+.form-add-resource{
+    min-height: 50vh;
+    margin-left: 290px;
+    margin-right: 10px;
+    background: #fff;
+}
+.cred-add-resource{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 40px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+.tittle-add-resource{
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+.input-add-resource{
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+}
+.cont-a{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.btn-create-resource{
+    border: 2px solid #11A556;
+    background-color: #15CE6C;
+    color: white;
+    border-radius: 8px;
+    margin-left: 5px;
+    padding: 5px;
+    margin-top: 25px;
+}
+.cont-btn-add-resource{
+    display: flex;
+    justify-content: center;
+}
+
+.bg-add-resource{
+    background-color:#8ECAE6;
+    min-height: 88vh;
+}

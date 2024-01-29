@@ -1,0 +1,85 @@
+
+.sidebarpro{
+width: 240px;
+height:100vh;
+background:#023047;
+}
+
+.log-img{
+    height:90px;
+    width: 90px;
+}
+.sidebarpro .nav-side .li-side {
+    display: flex;
+    color:#fff;
+    text-align: center;
+
+}
+.link-side{
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    color:#fff;
+    border: 1px solid #8ECAE6;
+    padding-bottom: 14px;
+    padding-top: 14px;
+    padding-left: 10px;
+    margin: 5px;
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 100%;
+    border-radius: 22px;
+}
+.link-side:hover{
+    background: #8ECAE6;
+    transition: 320ms;
+    color: black;
+    border: 1px solid white;
+}
+.icon-side{
+    margin-right: 7px;
+}
+
+.link-first{
+    display: flex;
+   justify-content: center;
+   text-decoration:none;
+    color:#fff;
+}
+.icon-first{
+    margin-right: 7px;
+}
+
+.li-log{
+    display: flex;
+    align-items: center;
+}
+.task-unity{
+    color: #fff;
+    width: auto;
+    font-size: 28px;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.pro-re{
+    text-align: center;
+    padding:10px;
+}
+.pro-fa{
+    text-align: center;
+    padding:10px;
+    padding-bottom: 14px;
+}
+
+ .toggle-btn{
+    position: absolute;
+    color: black;
+    left: 200px;
+    top: 5px;
+    cursor: pointer;
+}
+
+.btn-hamburger{
+    border: 1px solid;
+    border-radius: 5px;
+}
