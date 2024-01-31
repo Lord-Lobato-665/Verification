@@ -24,7 +24,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/resources" element={<ResourcesAdmin />} />
-          <Route path="/resources/edit" element={<EditResource />} />
+          <Route path="/resources/edit/:id" element={<EditResource />} />
           <Route path="/resources/add" element={<AddResource />} />
           <Route path="/resources/delete" element={<DeleteResource />} />
         </Routes>
