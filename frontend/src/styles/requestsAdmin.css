@@ -1,7 +1,10 @@
-.content-table {
-    border-collapse: collapse;
-    background-color: #ffffff;
+.box-request-admin{
+    margin-left: 280px;
 
+}
+.content-table {
+    background-color: #ffffff;
+    border-collapse: collapse;
     font-size: 0.9em;
     min-width: 400px;
     border-radius: 5px 5px 0 0;
@@ -25,17 +28,15 @@
     border-bottom: 1px solid #dddddd;
 }
 
+.td-request-admin:hover{
+    background-color: #dddddd;
+}
 
-
-.content-table tbody tr:last-of-type {
+.content-table tbody:hover {
     border-bottom: 2px solid #009879;
 }
 
-.content-table tbody tr td:hover{
+.content-table tbody tr.active-row {
+    font-weight: bold;
     color: #009879;
-}
-
-.td-request-admin:hover{
-    background-color: #efe8e8;
-
 }
