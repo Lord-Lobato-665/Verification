@@ -104,3 +104,38 @@
 .perfil-container-user:hover {
     border-color: #fb8500; /* Cambia border-style por border y establece un grosor (en este caso, 2px) */
 }
+
+/* Invitacion de miembros */
+
+.container-invitation-user {
+    position: absolute;
+    top: 17px;
+    left: 800px;
+    text-align: center;
+    width: 350px;
+    height: 20px;
+    padding: 10px;
+    transition: .2s linear;
+    border: 2.5px solid #023047;
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #023047;
+    letter-spacing: 6px;
+    background-color: white;
+    cursor: pointer;
+}
+
+.inv-user {
+    transition: 0.5s;
+}
+
+.container-invitation-user:hover {
+    .inv-user {
+        transform: scale(1.08);
+    }
+}
+
+.container-invitation-user:active {
+    background-color: #DCDCDC;
+}

@@ -1,13 +1,13 @@
 import SideBarAdmin from "../components/SideBarAdmin"
 import HeaderAdmin from "../components/HeaderAdmin"
+import StatsTable from "../components/StatsTable"
+import "../styles/HeaderAdmin.css"
 const HomeAdmin = () => {
   return (
     <>
-    <SideBarAdmin/>
-    <HeaderAdmin/>
-    <div className="inicio-admin-container">
-      Bienvenidos al dash board
-    </div>
+      <SideBarAdmin />
+      <HeaderAdmin />
+      <StatsTable />
     </>
   )
 }

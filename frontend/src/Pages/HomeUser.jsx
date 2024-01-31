@@ -6,7 +6,9 @@ const HomeUser = () => {
     <>
     <SideBarUser/>
     <HeaderUser/>
-    <div className="container-home-user"></div>
+    <div className="container-home-user">
+      Home user
+    </div>
     </>
   )
 }
