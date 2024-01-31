@@ -1,16 +1,17 @@
 import SideBarAdmin from "../components/SideBarAdmin"
-import ResourcesTable from "../components/ResourcesTable"
+import RequestsTable from "../components/RequestsTable"
 import HeaderAdmin from "../components/HeaderAdmin"
-import "../styles/ResourcesAdmin.css"
-const ResourcesAdmin = () => {
+import "../styles/RequestsAdmin.css"
+
+const RequestsAdmin = () => {
   return (
     <>
       <HeaderAdmin />
       <SideBarAdmin />
-      <ResourcesTable />
+      <RequestsTable />
 
     </>
   )
 }
 
-export default ResourcesAdmin
+export default RequestsAdmin

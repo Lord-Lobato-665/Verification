@@ -1,0 +1,9 @@
+.btn-add-member{
+    border: 2px solid #023047;
+    background-color: #023047;
+    color: white;
+    border-radius: 8px;
+    margin-left: 5px;
+    padding: 5px;
+    text-decoration: none;
+}

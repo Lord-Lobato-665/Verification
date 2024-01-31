@@ -44,13 +44,13 @@ function SideBarAdmin() {
                         </Link>
                     </li>
                     <li className="contain-li">
-                        <Link to="/404" className="link-container">
+                        <Link to="/members" className="link-container">
                             <span>Miembros</span>
                             <FaUsersGear className="icon-sidebar" />
                         </Link>
                     </li>
                     <li className="contain-li">
-                        <Link to="/404" className="link-container">
+                        <Link to="/requests" className="link-container">
                             <span>Peticiones</span>
                             <BsCardChecklist className="icon-sidebar" />
                         </Link>
