@@ -11,8 +11,7 @@ import Login from "./Pages/Login";
 import Register from "./Pages/Register";
 import MembersAdmin from "./Pages/MembersAdmin";
 import RequestsAdmin from "./Pages/RequestsAdmin";
-import AddMember from "./components/AddMember";/* 
-import RequestsAdmin from "./Pages/RequestsAdmin"; */
+import AddMember from "./components/AddMember";
 function App() {
 
 
@@ -28,7 +27,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/resources" element={<ResourcesAdmin />} />
-          <Route path="/resources/edit" element={<EditResource />} />
+          <Route path="/resources/edit/:id" element={<EditResource />} />
           <Route path="/resources/add" element={<AddResource />} />
           <Route path="/resources/delete" element={<DeleteResource />} />
           <Route path="/requests" element={<RequestsAdmin />} />

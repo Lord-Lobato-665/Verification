@@ -1,39 +1,79 @@
 import SideBarAdmin from "./SideBarAdmin"
 import HeaderAdmin from "./HeaderAdmin"
 import "../styles/AddResource.css"
+import axios from "axios";
 import { useState, useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
 const AddResource = () => {
-    const [nombreRecurso, setNombreRecurso] = useState('');
-    const [tipoRecurso, setTipoRecurso] = useState('');
-    const [cantidadRecurso, setCantidadRecurso] = useState('');
-    const [estadoRecurso, setEstadoRecurso] = useState('');
-    const [estados, setEstados] = useState([]);
+ const [recurso,setRecurso]=useState({
+  nombre:"",
+  tipo:"",
+  cantidad:"",
+  estado:""
+ })
+ const [estados, setEstados] = useState([]);
+ const navigate=useNavigate();
+  // Actualiza el estado al cambiar los valores del formulario
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setRecurso({ ...recurso, [name]: value });
+  };
 
-    useEffect(() => {
-        // Aquí deberías cargar los estados desde tu base de datos
-        const cargarEstados = async () => {
-          // Usa fetch o Axios para cargar los datos desde tu backend
-          // setEstados(resultadoDeLaCarga);
-        };
-        cargarEstados();
-      }, []);
+ const CrearRecurso = (e) => {
+  e.preventDefault();
+  // Validar todos los campos requeridos.
+  if (!recurso.nombre || !recurso.tipo || recurso.cantidad <= 0 || !recurso.estado) {
+    window.alert('Por favor, complete todos los campos requeridos.');
+    return;
+  }
+  axios
+    .post("http://localhost:8081/crearRecurso",  {
+      nombre: recurso.nombre,
+      tipo: recurso.tipo,
+      cantidad: parseInt(recurso.cantidad, 10),
+      estado: parseInt(recurso.estado, 10)
+    })
+    .then((respuesta) => {
+      if (respuesta.data.Estatus === "Exitoso") {
+        navigate("/resources");
+      }
+    })
+    .catch((error) => console.log(error));
+};
 
-      const handleSubmit = (e) => {
-        e.preventDefault();
-        // Realizar validaciones aquí si es necesario
-        onSubmit({
-          nombre_recurso: nombreRecurso,
-          tipo_recurso: tipoRecurso,
-          cantidad_recurso: Number(cantidadRecurso),
-          id_estado_id: estadoRecurso,
-        });
-      };
+
+useEffect(() => {
+  const cargarEstados = async () => {
+    try {
+      const response = await fetch('http://localhost:8081/obtenerEstados');
+      if (!response.ok) {
+        console.log('La respuesta de la red no fue ok.');
+      } else if (response.headers.get("content-type").includes("application/json")) {
+        const data = await response.json();
+        if (data.Estatus === "Exitoso") {
+          setEstados(data.contenido);
+          console.log(data.contenido);
+        } else {
+          console.log('La respuesta no fue exitosa.');
+        }
+      } else {
+        console.log('No se recibió JSON');
+      }
+    } catch (error) {
+      console.error('Hubo un problema con la operación fetch:', error);
+    }
+  };
+  cargarEstados();
+}, []);
+
+
+
   return (
    <>
      <HeaderAdmin/>
     <SideBarAdmin/>
 <div className="bg-add-resource" >
-    <form onSubmit={handleSubmit} className="form-add-resource">
+    <form className="form-add-resource" onSubmit={CrearRecurso}>
         <h2 className="tittle-add-resource">
             Agregar Recurso
         </h2>
@@ -43,9 +83,10 @@ const AddResource = () => {
         <label>Nombre del Recurso:</label>
         <input
           type="text"
-          value={nombreRecurso}
-          onChange={(e) => setNombreRecurso(e.target.value)}
           required
+          name="nombre"
+          value={recurso.nombre}
+          onChange={handleChange}
           />
       </div>
           </div>
@@ -54,9 +95,12 @@ const AddResource = () => {
          
       <div className="input-add-resource">
         <label>Tipo de Recurso:</label>
-        <select value={tipoRecurso} onChange={(e) => setTipoRecurso(e.target.value)} required>
+        <select required name="tipo"  onChange={handleChange} value={recurso.tipo}>
           <option value="">Seleccione un tipo de recurso</option>
+          <option value="Hardware">Hardware</option>
+          <option value="Software">Software</option>
           <option value="Humano">Humano</option>
+          <option value="Digital">Digital</option>
           <option value="Material">Material</option>
         </select>
       </div>
@@ -68,10 +112,11 @@ const AddResource = () => {
         <label>Cantidad del Recurso:</label>
         <input
           type="number"
-          value={cantidadRecurso}
-          onChange={(e) => setCantidadRecurso(e.target.value)}
-          min="0"
+          min="1"
           required
+          value={recurso.cantidad}
+          name="cantidad"
+          onChange={handleChange}
           />
       </div>
           </div>
@@ -82,7 +127,7 @@ const AddResource = () => {
 
       <div className="input-add-resource">
         <label>Estado del Recurso:</label>
-        <select value={estadoRecurso} onChange={(e) => setEstadoRecurso(e.target.value)} required>
+        <select required value={recurso.estado} name="estado" onChange={handleChange}>
           <option value="">Seleccione un estado</option>
           {estados.map((estado) => (
             <option key={estado.id_estado} value={estado.id_estado}>
