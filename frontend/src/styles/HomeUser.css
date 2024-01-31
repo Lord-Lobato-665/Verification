@@ -1,6 +1,136 @@
 .container-home-user {
     position: absolute;
+    border-style: dotted;
+    border-color: black;
     left: 280px;
-    width: 100px;
-    height: 100px;
+    width: 1080px;
+    height: 520px;
+    text-align: center;
+    font-size: 30px;
 }
+
+/* Boton de crear */
+
+.button-create-project {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    border: none;
+    background: none;
+    color: #0f1923;
+    cursor: pointer;
+    position: relative;
+    padding: 6px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 14px;
+    transition: all .15s ease;
+  }
+
+  .plus-create-project {
+    font-size: 20px;
+  }
+  
+  .button-create-project::before,
+  .button-create-project::after {
+    content: '';
+    display: block;
+    position: absolute;
+    right: 0;
+    left: 0;
+    height: calc(50% - 5px);
+    border: 1px solid #7D8082;
+    transition: all .15s ease;
+  }
+  
+  .button-create-project::before {
+    top: 0;
+    border-bottom-width: 0;
+  }
+  
+  .button-create-project::after {
+    bottom: 0;
+    border-top-width: 0;
+  }
+  
+  .button-create-project:active,
+  .button-create-project:focus {
+    outline: none;
+  }
+  
+  .button-create-project:active::before,
+  .button-create-project:active::after {
+    right: 3px;
+    left: 3px;
+  }
+  
+  .button-create-project:active::before {
+    top: 3px;
+  }
+  
+  .button-create-project:active::after {
+    bottom: 3px;
+  }
+  
+  .button_lg-create-project {
+    position: relative;
+    display: block;
+    padding: 30px 30px;
+    color: #fff;
+    background-color: #219ebc;
+    overflow: hidden;
+    box-shadow: inset 0px 0px 0px 1px transparent;
+  }
+  
+  .button_lg-create-project::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 2px;
+    height: 2px;
+    background-color: #0f1923;
+  }
+  
+  .button_lg-create-project::after {
+    content: '';
+    display: block;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 4px;
+    height: 4px;
+    background-color: #0f1923;
+    transition: all .2s ease;
+  }
+  
+  .button_sl-create-project {
+    color: white;
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: -20px;
+    left: -20px;
+    width: 0;
+    background-color: #fb8500;
+    transform: skew(-15deg);
+    transition: all .2s ease;
+  }
+  
+  .button_text-create-project {
+    position: relative;
+  }
+  
+  .button-create-project:hover {
+    color: #0f1923;
+  }
+  
+  .button-create-project:hover .button_sl-create-project {
+    width: calc(100% + 15px);
+  }
+  
+  .button-create-project:hover .button_lg-create-project::after {
+    background-color: #fff;
+  }

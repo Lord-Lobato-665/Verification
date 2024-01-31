@@ -11,8 +11,8 @@ import Login from "./Pages/Login";
 import Register from "./Pages/Register";
 import MembersAdmin from "./Pages/MembersAdmin";
 import RequestsAdmin from "./Pages/RequestsAdmin";
-import AddMember from "./components/AddMember";
-import RequestsAdmin from "./Pages/RequestsAdmin";
+import AddMember from "./components/AddMember";/* 
+import RequestsAdmin from "./Pages/RequestsAdmin"; */
 function App() {
 
 
