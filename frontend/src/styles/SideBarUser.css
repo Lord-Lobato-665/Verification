@@ -6,6 +6,7 @@
     height: 100%;
     width: 280px;
     background-color: #F6F6F6;
+    border-right: #023047 solid 2px;
 }
 
 .container-nombre-user {
@@ -38,63 +39,122 @@
     width: 160px;
 }
 
-.desing-list-user li {
+/* Sidebar Usuario */
+
+.rec-user {
+    display: flex;
+    color: black;
     font-size: 20px;
-    list-style: none;
-    margin-left: 15px;
-    margin-bottom: 20px;
-    color: #000;
+    margin-left: 40px;
+    gap: 10px;
+    cursor: pointer;
 }
 
-.nav_list-user li a {
-    text-decoration: none;
+.rec-user:hover {
+    color: #fb8500;
+}
+
+.rec-user:active {
+    color: #bc6501;
+}
+
+.fav-user {
+    display: flex;
     color: black;
-    text-shadow: 0 0 10px rgba(000, 000, 000, 0.3);
+    font-size: 20px;
+    margin-left: 40px;
+    gap: 10px;
+    cursor: pointer;
 }
 
-.icon-sidebar-user {
+.fav-user:hover {
+    color: #fb8500;
+}
+
+.fav-user:active {
+    color: #bc6501;
+}
+
+.list-container-user {
+    margin-top: 30px;
+    width: 275px;
+    height: 150px;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    grid-template-columns: 10px;
+}
+
+.list-position-user option {
+    margin-left: 200px;
+}
+
+.list-style-user {
+    width: 250px;
+    height: 35px;
+    background-color: #023047;
+    color: white;
+    border-style: solid;
+    border-color: gray;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+.container-buttons-user {
+    width: 275px;
+    height: 120px;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    gap: 20px;
+}
+
+
+.buttons-user {
+    position: relative;
+    width: 70px;
+    height: 70px;
+    background-color: #023047;
+    color: white;
+    border-style: solid;
+    border-color: gray;
+    border-radius: 8px;
+    margin-top: 10px;
+    transition: background-color 0.3s, color 0.2s;
+}
+
+.button-content {
+    display: block;
+}
+
+.button-hover-content {
+    display: none;
+    font-size: 20px;
     position: absolute;
-    color: black;
-    left: 220px;
-    transition: transform 0.4s ease;
+    top: 22px;
+    left: 22px;
 }
 
-.text-user {
-    color: #000;
+.buttons-user:hover {
+    background-color: #fb8500;
+    /* Cambiamos el color de fondo al hacer hover */
 }
 
-.link-container-user {
-    height: 36px;
-    width: 200px;
-    display: flex;
-    align-items: center;
-    justify-content: left;
-    transition: font-size 0.4s ease;
+.buttons-user:active {
+    background-color: #b46000;
 }
 
-.contain-li-user {
-    height: 36px;
-    width: 200px;
-    padding-left: 10px;
-    padding-right: 30px;
-    border-bottom: solid #8ECAE6;
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: left;
-    transition: background-color 0.3s ease, border-radius 0.4s ease;
+.buttons-user:hover .button-content {
+    display: none;
 }
 
-.contain-li-user:hover {
-    background-color: rgba(251, 133, 0, 0.9);
-    border-radius: 10px 30px 30px 10px;
-    .link-container-user {
-        font-size: 24px;
-    }
-    .icon-sidebar-user {
-        transform: scale(1.2);
-    }
+.buttons-user:hover .button-hover-content {
+    display: block;
 }
+
+
+
 
 /* Media query para hacer el navbar responsivo */
 

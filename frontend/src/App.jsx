@@ -9,6 +9,9 @@ import AddResource from "./components/AddResource";
 import DeleteResource from "./components/DeleteResource";
 import Login from "./Pages/Login";
 import Register from "./Pages/Register";
+import MembersAdmin from "./Pages/MembersAdmin";
+import RequestsAdmin from "./Pages/RequestsAdmin";
+import AddMember from "./components/AddMember";
 function App() {
 
 
@@ -27,6 +30,11 @@ function App() {
           <Route path="/resources/edit/:id" element={<EditResource />} />
           <Route path="/resources/add" element={<AddResource />} />
           <Route path="/resources/delete" element={<DeleteResource />} />
+          <Route path="/requests" element={<RequestsAdmin />} />
+
+          <Route path="/members" element={<MembersAdmin />} />
+          <Route path="/members/add" element={<AddMember />} />
+          <Route path="/requests" element={<RequestsAdmin />} />
         </Routes>
       </BrowserRouter>
     </>
