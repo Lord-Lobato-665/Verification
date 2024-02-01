@@ -39,6 +39,39 @@ app.listen(8081, () => {
     console.log("Servidor iniciado");
   });
 
+
+  // Acceso a usuario (login)
+app.post("/acceso", (peticion, respuesta) => {
+  const sql =
+    "SELECT id_usuario, nombre_usuario, correo_electronico, nivel, estatus FROM usuarios WHERE correo_electronico = ? AND contrasenia = ? AND estatus = 1";
+  console.log(peticion.body);
+  conexion.query(
+    sql,
+    [peticion.body.correo_electronico, peticion.body.contrasenia],
+    (error, resultado) => {
+      if (error) return respuesta.json({ mensaje: "Error en la consulta" });
+      if (resultado.length > 0) {
+        const usuario = resultado[0]; // Obtener los datos del usuario desde el resultado
+        const token = jwt.sign({ usuario: "administrador" }, "juan", {
+          expiresIn: "1d",
+        });
+        respuesta.setHeader("Set-Cookie", `token=${token}`); // Agregar la cookie como cabecera de respuesta
+        return respuesta.json({
+          Estatus: "CORRECTO",
+          Usuario: token,
+          usuarioId: usuario.id_usuario, // Incluir el ID del usuario en la respuesta
+          nivelUsuario: usuario.nivel,
+        });
+      } else {
+        return respuesta.json({
+          Estatus: "Error",
+          Error: "Usuario o contraseña incorrecta",
+        });
+      }
+    }
+  );
+});
+
 // Consultar todas los recursos
 app.get("/obtenerRecursos", (peticion, respuesta) => {
     const sql = "select r.id_recurso,r.nombre_recurso,r.tipo_recurso,r.cantidad_recurso,e.nombre_estado from recursos as r inner join estados as e on r.id_estado_id=e.id_estado";
@@ -148,12 +181,59 @@ conexion.query(
     }
   }
 )
-
-
 })
 
 //aceptar peticion
 app.put("/aceptarPeticion/:id" ,(peticion,respuesta)=>{
 const idPeticion=peticion.params.id;
-const sql="update peticiones set "
+const sql="update peticiones set id_estado_id=14 where id_peticion=?";
+conexion.query(sql,[idPeticion],(error,resultado)=>{
+  if(error){
+    return respuesta.json({
+      Estatus:"Error"
+    })
+  }else{
+    respuesta.json({
+      Estatus:"Exitoso",contenido:resultado
+    })
+  }
+})
+})
+
+//Rechazar peticion
+app.put("/rechazarPeticion/:id" ,(peticion,respuesta)=>{
+  const idPeticion=peticion.params.id;
+  const sql="update peticiones set id_estado_id=13 where id_peticion=?";
+  conexion.query(sql,[idPeticion],(error,resultado)=>{
+    if(error){
+      return respuesta.json({
+        Estatus:"Error"
+      })
+    }else{
+      respuesta.json({
+        Estatus:"Exitoso",contenido:resultado
+      })
+    }
+  })
+  })
+
+
+//mostrar todos los usuarios 
+app.get("/mostrarUsuarios",(peticion,respuesta)=>{
+  const sql="select id_usuario,nombre_usuario,correo_usuario from usuarios"
+conexion.query(
+  sql,(error,resultado)=>{
+    if(error){
+      return respuesta.json({
+        Estatus:"Error",
+        Error:"No se completo la consulta"
+      })
+    }else{
+      return respuesta.json({
+        Estatus:"Exitoso",contenido:resultado
+      })
+
+    }
+  }
+)
 })
