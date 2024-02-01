@@ -76,7 +76,7 @@
     display: block;
     padding: 30px 30px;
     color: #fff;
-    background-color: #219ebc;
+    background-color: #023047;
     overflow: hidden;
     box-shadow: inset 0px 0px 0px 1px transparent;
   }
@@ -112,7 +112,7 @@
     bottom: -20px;
     left: -20px;
     width: 0;
-    background-color: #fb8500;
+    background-color: #e67e22;
     transform: skew(-15deg);
     transition: all .2s ease;
   }
@@ -132,3 +132,71 @@
   .button-create-project:hover .button_lg-create-project::after {
     background-color: #fff;
   }
+
+  .project-view-container {
+    width: 1080px;
+    height: 420px;
+    margin-top: 20px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    overflow-y: auto; /* Agrega un scrollbar vertical cuando sea necesario */
+}
+
+.icon-create-project {
+    margin-top: 10px;
+    font-size: 25px;
+    display: flex;
+    gap: 6px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.edit-icon:hover {
+    color: rgb(0, 118, 0);
+}
+
+.edit-icon:active {
+    transform: scale(1.2);
+}
+
+.delete-icon:hover {
+    color: rgb(184, 0, 0);
+}
+
+.delete-icon:active {
+    transform: scale(1.2);
+}
+
+.view-project {
+    width: 200px;
+    height: 110px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border: 2px solid #0f1923;
+    background-color: #023047; /* Azul */
+    color: #ffffff; /* Blanco para el texto */
+    font-size: 15px;
+    transition: 0.4s;
+}
+
+.view-project-decoration {
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    border: #ffffff solid 2px;
+    width: 190px;
+    height: 100px;
+}
+
+/* Estilo para resaltar al pasar el mouse */
+.view-project:hover {
+    background-color: #e67e22; /* Naranja */
+    cursor: pointer;
+}
