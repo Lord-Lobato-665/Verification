@@ -32,7 +32,7 @@ function SideBarAdmin() {
                         </Link>
                     </li>
                     <li className="contain-li">
-                        <Link to="/404" className="link-container">
+                        <Link to="/users" className="link-container">
                             <span>Usuarios</span>
                             <FaUserGear className="icon-sidebar" />
                         </Link>
