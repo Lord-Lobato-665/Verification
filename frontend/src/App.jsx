@@ -12,6 +12,8 @@ import Register from "./Pages/Register";
 import MembersAdmin from "./Pages/MembersAdmin";
 import RequestsAdmin from "./Pages/RequestsAdmin";
 import AddMember from "./components/AddMember";
+import UsersAdmin from "./Pages/UsersAdmin";
+import EditAdmin from "./components/EditAdmin";
 function App() {
 
 
@@ -31,6 +33,8 @@ function App() {
           <Route path="/resources/add" element={<AddResource />} />
           <Route path="/resources/delete" element={<DeleteResource />} />
           <Route path="/requests" element={<RequestsAdmin />} />
+          <Route path="/users" element={<UsersAdmin />} />
+          <Route path="/users/edit/:id" element={<EditAdmin />} />
 
           <Route path="/members" element={<MembersAdmin />} />
           <Route path="/members/add" element={<AddMember />} />
