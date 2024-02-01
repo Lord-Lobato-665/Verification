@@ -1,4 +1,4 @@
-import '../styles/RequestsAdmin.css'
+import '../styles/ReqAdmin.css'
 import SideBarAdmin from "../components/SideBarAdmin"
 import HeaderAdmin from "../components/HeaderAdmin"
 import { FaSearch } from "react-icons/fa";
@@ -106,7 +106,7 @@ useEffect(()=>{
                
           </div>
           <div className="cont-table-resource">
-            <div className="margin-table-resources">
+            <div >
             <table className="content-table">
         <thead>
           <tr>

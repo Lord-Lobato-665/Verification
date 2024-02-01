@@ -237,3 +237,5 @@ conexion.query(
   }
 )
 })
+
+//borrar un recurso

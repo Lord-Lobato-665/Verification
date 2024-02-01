@@ -10,10 +10,13 @@
     border-radius: 5px 5px 0 0;
     overflow: hidden;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    margin-left: 20px;
+    margin-right: 20px;
 }
 
+
 .content-table thead tr {
-    background-color: #009879;
+    background-color:#023047;
     color: #ffffff;
     text-align: left;
     font-weight: bold;
@@ -29,7 +32,7 @@
 }
 
 .td-request-admin:hover{
-    background-color: #dddddd;
+    background-color: #ebe9e9;
 }
 
 .content-table tbody:hover {
@@ -39,4 +42,11 @@
 .content-table tbody tr.active-row {
     font-weight: bold;
     color: #009879;
+}
+
+.accept-request{
+    cursor: pointer;
+}
+.exit-request{
+    cursor: pointer;
 }
