@@ -2,6 +2,7 @@
 display: flex;
 flex-wrap:wrap;
 background-color: #8ECAE6;
+height: 100%;
 font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 margin-left:280px;
 min-height: 86.8vh;
