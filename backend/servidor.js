@@ -239,3 +239,128 @@ conexion.query(
 })
 
 //borrar un recurso
+  app.delete(
+    "/eliminarRecurso/:id",
+    (peticion, respuesta) => {
+      const sql ="delete from recursos where id_recurso=?";
+        const idRecurso = peticion.params.id;
+      conexion.query(sql, [idRecurso], (error, resultado) => {
+        if (error) return respuesta.json({ Estatus: "Error" });
+        return respuesta.json({ Estatus: "Exitoso" });
+      });
+    }
+  ); 
+
+
+  //mostrar un usuario por id
+app.get("/mostrarUsuario/:id",(peticion,respuesta)=>{
+  const sql="select nombre_usuario,correo_usuario from usuarios where id_usuario=?"
+  const id=peticion.params.id;
+conexion.query(
+  sql,[id],(error,resultado)=>{
+    if(error){
+      return respuesta.json({
+        Estatus:"Error",
+        Error:"No se completo la consulta"
+      })
+    }else{
+      return respuesta.json({
+        Estatus:"Exitoso",contenido:resultado
+      })
+
+    }
+  }
+)
+})
+
+// Actualizar un usuario por ID
+app.put("/actualizarUsuario/:id", (peticion, respuesta) => {
+  const { id } = peticion.params; // Obtiene el ID del usuario desde la URL
+  const { nombre_usuario, correo_usuario } = peticion.body; // Obtiene los datos actualizados del usuario desde el cuerpo de la solicitud
+
+  // Define la consulta SQL para actualizar el usuario en la base de datos
+  const sql = "UPDATE usuarios SET nombre_usuario = ?, correo_usuario = ? WHERE id_usuario = ?";
+
+  // Ejecuta la consulta SQL con los valores proporcionados
+  conexion.query(sql, [nombre_usuario, correo_usuario, id], (error, resultado) => {
+    if (error) {
+      // Si ocurre un error durante la ejecución de la consulta, devuelve una respuesta de error
+      return respuesta.json({
+        Estatus: "Error",
+        Error: "No se pudo actualizar el usuario"
+      });
+    } else {
+      // Si la actualización es exitosa, devuelve una respuesta de éxito
+      return respuesta.json({
+        Estatus: "Exitoso",
+        Mensaje: "Usuario actualizado con éxito"
+      });
+    }
+  });
+});
+
+
+// Crear un nuevo usuario
+app.post("/crearUsuario", (peticion, respuesta) => {
+  // Extracción de datos del cuerpo de la petición
+  const { nombre_usuario, correo_usuario,contrasena_usuario} = peticion.body;
+
+  // Consulta SQL para insertar un nuevo usuario en la base de datos
+  const sql = "INSERT INTO usuarios (nombre_usuario, correo_usuario,contraseña_usuario,id_rol_id) VALUES (?,?,?,1)";
+
+  // Ejecución de la consulta
+  conexion.query(sql, [nombre_usuario, correo_usuario,contrasena_usuario], (error, resultado) => {
+    if (error) {
+      // Manejo de errores durante la inserción
+      console.error("Error al insertar un nuevo usuario: ", error);
+      return respuesta.json({
+        Estatus: "Error",
+        Error: "No se pudo crear el usuario"
+      });
+    } else {
+      // Respuesta exitosa con el ID del nuevo usuario
+      return respuesta.json({
+        Estatus: "Exitoso",
+        Mensaje: "Usuario creado con éxito",
+        idUsuarioCreado: resultado.insertId // Devuelve el ID del usuario recién creado
+      });
+    }
+  });
+});
+
+
+// Eliminar un usuario existente
+app.delete("/eliminarUsuario/:id", (peticion, respuesta) => {
+  // Extracción del id del usuario desde los parámetros de la ruta
+  const { id } = peticion.params;
+
+  // Consulta SQL para eliminar un usuario de la base de datos
+  const sql = "DELETE FROM usuarios WHERE id_usuario = ?";
+
+  // Ejecución de la consulta
+  conexion.query(sql, [id], (error, resultado) => {
+    if (error) {
+      // Manejo de errores durante la eliminación
+      console.error("Error al eliminar el usuario: ", error);
+      return respuesta.json({
+        Estatus: "Error",
+        Error: "No se pudo eliminar el usuario"
+      });
+    } else if (resultado.affectedRows === 0) {
+      // Caso en el que no se encuentra el usuario a eliminar
+      return respuesta.json({
+        Estatus: "Error",
+        Error: "Usuario no encontrado o ya fue eliminado"
+      });
+    } else {
+      // Respuesta exitosa indicando la eliminación del usuario
+      return respuesta.json({
+        Estatus: "Exitoso",
+        Mensaje: "Usuario eliminado con éxito"
+      });
+    }
+  });
+});
+
+
+

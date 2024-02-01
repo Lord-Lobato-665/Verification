@@ -6,6 +6,7 @@ import { FaTrashAlt } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import SideBarAdmin from "../components/SideBarAdmin";
 import HeaderAdmin from "../components/HeaderAdmin";
+import axios from "axios";
 
 const UsersAdmin = () => {
   const [users, setUsers] = useState([]);
@@ -21,7 +22,19 @@ const UsersAdmin = () => {
       }
     };
     atraerRecursos();
-  }, []);
+  }, [users]);
+
+  function eliminarUsuario(id) {
+    if (window.confirm("¿Seguro que quieres eliminar este recurso?")) {
+      axios
+        .delete(`http://localhost:8081/eliminarUsuario/${id}`)
+        .then((respuesta) => {
+          if (respuesta.data.Estatus === "Exitoso") {
+            console.log("si");
+          }
+        });
+    }
+  }
   return (
     <>
       <HeaderAdmin />
@@ -38,29 +51,25 @@ const UsersAdmin = () => {
               />
               <FaSearch size={20} />
             </div>
-            <Link to="/resources/add" className="btn-add-resource">
-              Agregar
+            <Link to="/users/add" className="btn-add-resource">
+              Nuevo
             </Link>
           </div>
           <div className="cont-table-resource">
-            <div className="margin-table-resources">
-              <table className="item-table-resource">
+            <div className="cont-table-resource">
+              <table className="content-table">
                 <tr className="row-one">
-                  <th className="head-table-resource">Nombre del Usuario</th>
-                  <th className="head-table-resource">Correo del Usuario</th>
-                  <th className="head-table-resource">Editar</th>
-                  <th className="head-table-resource">Eliminar</th>
+                  <th className="">Nombre del Usuario</th>
+                  <th className="">Correo del Usuario</th>
+                  <th className="">Editar</th>
+                  <th className="">Eliminar</th>
                 </tr>
 
                 {users.map((user) => (
-                  <tr key={user.id_usuario}>
-                    <td className="body-table-resource">
-                      {user.nombre_usuario}
-                    </td>
-                    <td className="body-table-resource">
-                      {user.correo_usuario}
-                    </td>
-                    <td className="body-table-resource">
+                  <tr key={user.id_usuario} className="td-request-admin">
+                    <td className="">{user.nombre_usuario}</td>
+                    <td className="">{user.correo_usuario}</td>
+                    <td className="">
                       <Link
                         className="edit-trash-resource"
                         to={`/users/edit/${user.id_usuario}`}
@@ -68,8 +77,11 @@ const UsersAdmin = () => {
                         <FaPencilAlt />
                       </Link>
                     </td>
-                    <td className="body-table-resource">
-                      <FaTrashAlt />
+                    <td className="">
+                      <FaTrashAlt
+                        onClick={() => eliminarUsuario(user.id_usuario)}
+                        style={{ cursor: "pointer" }}
+                      />
                     </td>
                   </tr>
                 ))}
