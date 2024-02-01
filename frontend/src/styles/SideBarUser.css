@@ -85,10 +85,6 @@
     grid-template-columns: 10px;
 }
 
-.list-position-user option {
-    margin-left: 200px;
-}
-
 .list-style-user {
     width: 250px;
     height: 35px;
@@ -137,7 +133,7 @@
 }
 
 .buttons-user:hover {
-    background-color: #fb8500;
+    background-color: #e67e22;
     /* Cambiamos el color de fondo al hacer hover */
 }
 
