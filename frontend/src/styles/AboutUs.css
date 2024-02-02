@@ -1,0 +1,41 @@
+  .container-about {
+      max-width: 100%;
+      text-align: center;
+  }
+
+  .image-container {
+      position: relative;
+  }
+
+  .image-container img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+  }
+
+  .title {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #219EBC;
+      font-size: 100px;
+      font-weight: bold;
+  }
+
+  .home-about {
+    background-color: #F6F6F6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.parrafo-about {
+    font-size: x-large;
+    margin: 0px 15%;
+    margin-bottom: 100px;
+    margin-top: 50px;
+}

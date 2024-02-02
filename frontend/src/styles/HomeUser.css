@@ -174,7 +174,7 @@
 
 .view-project {
     width: 200px;
-    height: 110px;
+    height: 210px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -192,11 +192,145 @@
     align-items: center;
     border: #ffffff solid 2px;
     width: 190px;
-    height: 100px;
+    height: 200px;
 }
 
 /* Estilo para resaltar al pasar el mouse */
 .view-project:hover {
     background-color: #e67e22; /* Naranja */
     cursor: pointer;
+}
+
+/* Modal */
+.Modal-information {
+  position: absolute;
+  width: 1200px;
+  height: 500px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #023047; /* Fondo del modal */
+  padding: 20px;
+  border-radius: 8px;
+  color: #ffffff; /* Color del texto en el modal */
+  animation: fadeIn 0.5s ease-in-out; /* Animación de entrada suave */
+  border: 2px solid #ffffff; /* Borde blanco de 2px */
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.4); /* Sombra brillante */
+}
+
+.Modal-update {
+  position: absolute;
+  width: 400px;
+  height: 500px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #023047; /* Fondo del modal */
+  padding: 20px;
+  border-radius: 8px;
+  color: #ffffff; /* Color del texto en el modal */
+  animation: fadeIn 0.5s ease-in-out; /* Animación de entrada suave */
+  border: 2px solid #ffffff; /* Borde blanco de 2px */
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.4); /* Sombra brillante */
+}
+
+.Overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* fondo oscuro semi-transparente */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Botón de cierre */
+.Modal-update button {
+  background-color: #0366d6; /* Fondo del botón */
+  color: #ffffff; /* Color del texto del botón */
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.Modal-update button:hover {
+  background-color: #054f9c; /* Cambia el color al pasar el ratón sobre el botón */
+}
+
+.Modal-update button:active {
+  background-color: #033c79; /* Cambia el color al pasar el ratón sobre el botón */
+}
+
+.Modal-information button {
+  background-color: #0366d6; /* Fondo del botón */
+  color: #ffffff; /* Color del texto del botón */
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.Modal-information button:hover {
+  background-color: #054f9c; /* Cambia el color al pasar el ratón sobre el botón */
+}
+
+.Modal-information button:active {
+  background-color: #033c79; /* Cambia el color al pasar el ratón sobre el botón */
+}
+
+
+/* Animación de entrada */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.button-modal {
+  background-color: #023047;
+  color: #ffffff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button-modal:hover {
+  background-color: #ffffff;
+  color: #023047;
+}
+
+.button-details-teams {
+  padding: 10px 20px;
+  border-radius: 4px;
+  background-color: #ffffff;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: 12px;
+  font-weight: bold;
+  color: #023047;
+  cursor: pointer;
+  transition: background-color 0.1s ease, color 0.3s ease;
+}
+
+.button-details-teams:hover {
+  background-color: #b9b9b9;
+}
+
+.button-details-teams:active {
+  background-color: #8f8e8e;
+}
+
+.alert-absolute {
+  position: absolute;
+  top: 0;
+  right: 10px;
 }

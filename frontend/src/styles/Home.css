@@ -1,0 +1,43 @@
+/*body{
+    background-color: #023047 !important;
+}*/
+
+.home1 {
+    background-color: #8ECAE6;
+    display: flex;
+    justify-content: space-between;
+}
+
+.home-welcome {
+    background-color: #8ECAE6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.home-welcome2 {
+    background-color: #219EBC;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.img-welcome {
+    height: 50%;
+    width: 50%;
+}
+
+.title-welcome {
+    color: #023047;
+    font-size: 100px;
+    margin: 0px;
+}
+
+.parrafo-welcome {
+    font-size: x-large;
+    margin: 50px 20px;
+}

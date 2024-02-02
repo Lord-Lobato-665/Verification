@@ -15,6 +15,9 @@ import AddMember from "./components/AddMember";
 import UsersAdmin from "./Pages/UsersAdmin";
 import EditAdmin from "./components/EditUserAdmin";
 import CreateUserAdmin from "./components/CreateUserAdmin";
+import Home from "./Pages/Home";
+import Mision from "./Pages/Mision";
+import AboutUs from "./Pages/AboutUs";
 function App() {
 
 
@@ -41,6 +44,9 @@ function App() {
           <Route path="/members" element={<MembersAdmin />} />
           <Route path="/members/add" element={<AddMember />} />
           <Route path="/requests" element={<RequestsAdmin />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/mision" element={<Mision />} />
+          <Route path="/nosotros" element={<AboutUs />} />
         </Routes>
       </BrowserRouter>
     </>
