@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 const Register = () => {
   const [user, setUser] = useState({
     nombre: '',
@@ -8,11 +9,12 @@ const Register = () => {
     password: ''
   });
 
+  const navegacion=useNavigate();
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUser({ ...user, [name]: value });
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -22,11 +24,21 @@ const Register = () => {
       return;
     }
 
-    // Aquí iría la lógica para enviar los datos a la base de datos
-    console.log('Datos enviados:', user);
+    // Envía los datos al servidor
+    try {
+      const response = await axios.post('http://localhost:8081/register', {
+        nombre_usuario: user.nombre,
+        correo_usuario: user.email,
+        contrasena_usuario: user.password
+      });
 
-    // Resetear el formulario (opcional)
-    setUser({ nombre: '', email: '', password: '' });
+      console.log('Usuario registrado:', response.data);
+      navegacion("/login")
+    } catch (error) {
+      // Maneja el error aquí
+      // Por ejemplo, si el servidor devuelve un error:
+      alert(error.response.data);
+    }
   };
 
   return (
