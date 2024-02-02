@@ -265,9 +265,33 @@
   background-color: #033c79; /* Cambia el color al pasar el ratón sobre el botón */
 }
 
-.Modal-information button {
+.Modal-update .modal-content {
+  background-color: #ffffff; /* Fondo del modal */
+  padding: 20px 20px 120px 20px;
+  border-radius: 8px;
+  color: #000000; /* Color del texto en el modal */
+}
+
+.Modal-update label {
+  display: block;
+}
+
+.Modal-update input {
+  width: 340px;
+  padding: 8px;
+  margin-bottom: 16px;
+}
+
+.Modal-update select {
+  width: 360px;
+  padding: 8px;
+  margin-bottom: 16px;
+}
+
+.Modal-update button.modal-update-button {
   background-color: #0366d6; /* Fondo del botón */
   color: #ffffff; /* Color del texto del botón */
+  margin-top: 50px;
   padding: 10px 15px;
   border: none;
   border-radius: 4px;
@@ -275,12 +299,59 @@
   transition: background-color 0.2s ease-in-out;
 }
 
-.Modal-information button:hover {
+.Modal-update button.modal-update-button:hover {
   background-color: #054f9c; /* Cambia el color al pasar el ratón sobre el botón */
 }
 
-.Modal-information button:active {
-  background-color: #033c79; /* Cambia el color al pasar el ratón sobre el botón */
+.Modal-update button.modal-update-button:active {
+  background-color: #033c79; /* Cambia el color al hacer clic en el botón */
+}
+
+.Modal-update button.modal-cancel-button {
+  background-color: #aaaaaa; /* Fondo del botón de cancelar */
+  color: #ffffff; /* Color del texto del botón de cancelar */
+  padding: 10px 40px;
+  margin-left: 90px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.Modal-update button.modal-cancel-button:hover {
+  background-color: #888888; /* Cambia el color al pasar el ratón sobre el botón de cancelar */
+}
+
+.Modal-update button.modal-cancel-button:active {
+  background-color: #666666; /* Cambia el color al hacer clic en el botón de cancelar */
+}
+
+.Modal-information .modal-content {
+  padding: 20px;
+  text-align: left;
+}
+
+.Modal-information .modal-details p {
+  margin: 0;
+  margin-bottom: 10px;
+}
+
+.Modal-information .modal-button {
+  background-color: #0366d6;
+  color: #ffffff;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.Modal-information .modal-button:hover {
+  background-color: #054f9c;
+}
+
+.Modal-information .modal-button:active {
+  background-color: #033c79;
 }
 
 

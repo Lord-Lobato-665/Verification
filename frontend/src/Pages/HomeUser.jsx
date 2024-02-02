@@ -77,14 +77,13 @@ const HomeUser = () => {
 
   const handleEdit = async () => {
     try {
-      const response = await fetch(`http://localhost:8081/editarEquipo/${editedTeam.id_equipo}`, {
-        method: 'PUT',
+      const response = await fetch(`http://localhost:8081/actualizarEquipo/${editedTeam.id_equipo}`, {
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           especialidad: editedTeam.especialidad_equipo,
-          idProyecto: editedTeam.id_proyecto_id,
           idEstado: editedTeam.id_estado_id,
         }),
       });
@@ -97,7 +96,10 @@ const HomeUser = () => {
 
       if (data.Estatus === 'Exitoso') {
         console.log('Equipo editado exitosamente');
+
+        // Actualiza el estado después de la edición exitosa
         fetchTeams();
+
         closeModal();
       } else {
         console.error('Error en la respuesta del servidor:', data);
@@ -106,7 +108,6 @@ const HomeUser = () => {
       console.error('Error de red:', error);
     }
   };
-
   const handleDelete = async (equipoId) => {
     // Mostrar cuadro de diálogo de confirmación
     const userConfirmed = window.confirm('¿Estás seguro de eliminar este equipo?');
@@ -180,9 +181,9 @@ const HomeUser = () => {
             <div className="view-project" key={index}>
               <div className='view-project-decoration'>
                 <br />
-                <p>{team.nombre_equipo}</p>
-                <br />
                 <p>{team.nombre_proyecto}</p>
+                <br />
+                <p>{team.nombre_equipo}</p>
                 <br />
                 <p>Estado: {team.nombre_estado}</p>
                 <br />
@@ -209,13 +210,17 @@ const HomeUser = () => {
           overlayClassName="Overlay"
         >
           {selectedTeam && (
-            <>
+            <div className="modal-content">
               <h2>{selectedTeam.nombre_equipo}</h2>
-              <p>{selectedTeam.especialidad_equipo}</p>
-              <p>{selectedTeam.nombre_proyecto}</p>
-              <p>Estado: {selectedTeam.nombre_estado}</p>
-              <button onClick={closeDetailsModal}>Cerrar</button>
-            </>
+              <div className="modal-details">
+                <p>Especialidad: {selectedTeam.especialidad_equipo}</p>
+                <p>Proyecto: {selectedTeam.nombre_proyecto}</p>
+                <p>Estado: {selectedTeam.nombre_estado}</p>
+              </div>
+              <button className="modal-button" onClick={closeDetailsModal}>
+                Cerrar
+              </button>
+            </div>
           )}
         </Modal>
         <Modal
@@ -226,23 +231,15 @@ const HomeUser = () => {
           overlayClassName="Overlay"
         >
           {editedTeam && (
-            <>
+            <div className="modal-content">
               <h2>Editar Equipo</h2>
+              <br />
               <label>Especialidad:</label>
               <input
                 type="text"
                 value={editedTeam.especialidad_equipo}
                 onChange={(e) =>
                   setEditedTeam({ ...editedTeam, especialidad_equipo: e.target.value })
-                }
-              />
-              <br />
-              <label>Proyecto:</label>
-              <input
-                type="text"
-                value={editedTeam.nombre_proyecto}
-                onChange={(e) =>
-                  setEditedTeam({ ...editedTeam, nombre_proyecto: e.target.value })
                 }
               />
               <br />
@@ -260,11 +257,16 @@ const HomeUser = () => {
                 ))}
               </select>
               <br />
-              <button onClick={handleEdit}>Guardar cambios</button>
-              <button onClick={closeModal}>Cancelar</button>
-            </>
+              <button className="modal-update-button" onClick={handleEdit}>
+                Guardar cambios
+              </button>
+              <button className="modal-cancel-button" onClick={closeModal}>
+                Cancelar
+              </button>
+            </div>
           )}
         </Modal>
+
       </div>
     </>
   );
