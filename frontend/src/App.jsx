@@ -29,8 +29,6 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login />} />
-          <Route path="/User" element={<HomeUser />} />
-          <Route path="/Admin" element={<HomeAdmin />} />
           <Route path="/404" element={<PageNotFound />} />
 
           <Route path="/login" element={<Login />} />
