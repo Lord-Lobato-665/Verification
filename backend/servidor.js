@@ -612,3 +612,62 @@ app.put("/actualizarProyecto/:id", (peticion, respuesta) => {
     }
   );
 });
+
+// -------------------------------------------------------------------
+
+//mostrar todos los equipos ---------------------------------------------
+app.get("/obtenerEquipos", (peticion, respuesta) => {
+  const sql = "SELECT e.id_equipo, e.especialidad_equipo, p.nombre_proyecto, s.nombre_estado FROM equipos e LEFT JOIN proyectos p ON e.id_proyecto_id = p.id_proyecto LEFT JOIN estados s ON e.id_estado_id = s.id_estado";
+  conexion.query(sql, (error, resultado) => {
+    if (error) return respuesta.json({ mensaje: "Error"});
+    return respuesta.json({Estatus: "Exitoso", contenido: resultado});
+  });
+});
+
+//mostrar equipos de manera mas reciente ---------------------------------
+app.get("/obtenerEquiposInvertido", (peticion, respuesta) => {
+  const sql = "SELECT e.id_equipo, e.especialidad_equipo, p.nombre_proyecto, s.nombre_estado FROM equipos e LEFT JOIN proyectos p ON e.id_proyecto_id = p.id_proyecto LEFT JOIN estados s ON e.id_estado_id = s.id_estado ORDER BY p.fecha_creacion DESC";
+  
+  conexion.query(sql, (error, resultado) => {
+    if (error) {
+      return respuesta.json({ mensaje: "Error"});
+    }
+    return respuesta.json({ Estatus: "Exitoso", contenido: resultado });
+  });
+});
+
+//eliminar equipo --------------------------------------------------------
+app.delete("/eliminarEquipo/:id", (peticion, respuesta) => {
+  const idEquipo = peticion.params.id;
+  const sql = "DELETE FROM equipos WHERE id_equipo = ?";
+  conexion.query(sql, [idEquipo], (error, resultado) => {
+      if (error) {
+          console.error('Error al eliminar el equipo:', error);
+          return respuesta.status(500).json({ Estatus: "Error", mensaje: "Error interno del servidor" });
+      }
+      return respuesta.json({ Estatus: "Exitoso", mensaje: "Equipo eliminado exitosamente" });
+  });
+});
+
+//actualizar equipo -----------------------------------------------------
+app.post("/actualizarEquipo/:idEquipo", (peticion, respuesta) => {
+  const idEquipo = peticion.params.idEquipo;
+  const { especialidad, idEstado } = peticion.body;
+
+  const sql = "UPDATE equipos SET especialidad_equipo = ?, id_estado_id = ? WHERE id_equipo = ?";
+  
+  conexion.query(sql, [especialidad, idEstado, idEquipo], (error, resultado) => {
+      if (error) return respuesta.json({ mensaje: "Error al actualizar el equipo" });
+      return respuesta.json({ Estatus: "Exitoso", mensaje: "Equipo actualizado exitosamente" });
+  });
+});
+//Obtener miembros -----------------------------------------------------
+app.get("/obtenerMiembros",(peticion,respuesta)=>{
+  const sql="SELECT m.id_miembro, u.nombre_usuario, e.nombre_equipo, re.nombre_rol_equipo, es.nombre_estado FROM miembros m INNER JOIN usuarios u ON m.id_usuario_id = u.id_usuario INNER JOIN equipos e ON m.id_equipo_id = e.id_equipo INNER JOIN roles_equipos re ON m.id_rol_equipo_id = re.id_rol_equipo INNER JOIN estados es ON m.id_estado_id = es.id_estado";
+  conexion.query(sql,(error,resultado)=>{
+    if(error) return respuesta.json({mensaje:"Error"});
+    return respuesta.json({Estatus:"Exitoso",contenido:resultado});
+  });
+});
+
+
