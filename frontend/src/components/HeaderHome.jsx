@@ -12,7 +12,7 @@ const HeaderHome = () => {
           <Link to="/home"><img className='logo-header' src={LogoHeader} alt="Logo" /></Link>
           <li className="center"><Link to="/nosotros">Nosotros</Link></li>
           <li className="center"><Link to="/mision">Misión y visión</Link></li>
-          <li className="center"><Link to="/user">Proyectos</Link></li>
+          <li className="center"><Link to="/home">Proyectos</Link></li>
 
           <Link to="/login"><button type="submit" className="btn-login">
             Ingresar

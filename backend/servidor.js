@@ -35,9 +35,9 @@ app.listen(8081, () => {
 app.post("/login", (req, res) => {
   const { correo_usuario, contrasena_usuario } = req.body;
 
-  // Check if user exists and get their password hash
+  // Check if user exists and get their password hash and role
   conexion.query(
-    "SELECT id_usuario, contraseña_usuario, asignacion FROM usuarios WHERE correo_usuario = ?",
+    "SELECT id_usuario, contraseña_usuario, id_rol_id FROM usuarios WHERE correo_usuario = ?",
     [correo_usuario],
     (err, results) => {
       if (err) {
@@ -65,46 +65,45 @@ app.post("/login", (req, res) => {
             return res.status(401).send("Credentials are not valid");
           }
 
-          conexion.query(
-            "SELECT id_rol_equipo_id FROM miembros WHERE id_usuario_id = ?",
-            [user.id_usuario],
-            (err, results) => {
-              if (err) {
-                console.error(err);
-                return res.status(500).send("Server error");
-              }
+          // Determine the redirect path based on the user's role
+          let path;
+          switch (user.id_rol_id) {
+            case 1:
+              path = '/home';
+              break;
+            case 2:
+              path = '/user';
+              break;
+            case 3:
+              path = '/Admin';
+              break;
+            default:
+              return res.status(401).send("Invalid user role");
+          }
 
-              if (results.length === 0) {
-                return res.status(401).send("Not a member");
-              }
-
-              const memberRole = results[0].id_rol_equipo_id;
-              let path = memberRole === 1 ? "/user" : "/Admin";
-
-              // Generate JWT token with role information
-              const token = jsonwebtoken.sign(
-                { id: user.id_usuario, role: memberRole === 2 ? 'Admin' : 'User' },
-                "yourSecretKey",
-                { expiresIn: "1h" }
-              );
-
-              // Send the token to the client
-              res.json({ token,path });
-            }
+          // Generate JWT token with role information
+          const token = jsonwebtoken.sign(
+            { id: user.id_usuario, role: user.id_rol_id },
+            "yourSecretKey",
+            { expiresIn: "1h" }
           );
+
+          // Send the token and the path to the client
+          res.json({ token, path });
         }
       );
     }
   );
 });
 
+
 // Middleware para verificar el token JWT
 function verificarToken(req, res, next) {
-  const bearerHeader = req.headers['authorization'];
-  if (typeof bearerHeader !== 'undefined') {
-    const bearer = bearerHeader.split(' ');
+  const bearerHeader = req.headers["authorization"];
+  if (typeof bearerHeader !== "undefined") {
+    const bearer = bearerHeader.split(" ");
     const bearerToken = bearer[1];
-    jsonwebtoken.verify(bearerToken, 'yourSecretKey', (err, authData) => {
+    jsonwebtoken.verify(bearerToken, "yourSecretKey", (err, authData) => {
       if (err) {
         res.sendStatus(403);
       } else {
@@ -120,7 +119,7 @@ function verificarToken(req, res, next) {
 // Middleware para verificar si el rol es Admin
 function verificarAdmin(req, res, next) {
   verificarToken(req, res, () => {
-    if (req.authData.role === 'Admin') {
+    if (req.authData.role === "Admin") {
       next();
     } else {
       res.sendStatus(403);
@@ -129,17 +128,14 @@ function verificarAdmin(req, res, next) {
 }
 
 // Ruta solo para Admins
-app.get('/rutaAdmin', verificarAdmin, (req, res) => {
+app.get("/rutaAdmin", verificarAdmin, (req, res) => {
   // Lógica de la ruta solo para Admin
 });
 
 // Ruta para cualquier usuario autenticado
-app.get('/rutaUsuario', verificarToken, (req, res) => {
+app.get("/rutaUsuario", verificarToken, (req, res) => {
   // Lógica de la ruta para cualquier usuario autenticado
 });
-
-
-
 
 app.post("/register", (req, res) => {
   // Obtén los datos del usuario desde el cuerpo de la solicitud
@@ -155,7 +151,7 @@ app.post("/register", (req, res) => {
 
     // Aquí ya tienes el hash de la contraseña y puedes proceder a guardarla en la base de datos
     conexion.query(
-      "INSERT INTO usuarios (nombre_usuario, correo_usuario, contraseña_usuario) VALUES (?, ?, ?)",
+      "INSERT INTO usuarios (nombre_usuario, correo_usuario, contraseña_usuario,id_rol_id) VALUES (?, ?, ?,1)",
       [nombre_usuario, correo_usuario, hash],
       (err, results) => {
         if (err) {
@@ -617,20 +613,22 @@ app.put("/actualizarProyecto/:id", (peticion, respuesta) => {
 
 //mostrar todos los equipos ---------------------------------------------
 app.get("/obtenerEquipos", (peticion, respuesta) => {
-  const sql = "SELECT e.id_equipo, e.especialidad_equipo, p.nombre_proyecto, s.nombre_estado FROM equipos e LEFT JOIN proyectos p ON e.id_proyecto_id = p.id_proyecto LEFT JOIN estados s ON e.id_estado_id = s.id_estado";
+  const sql =
+    "SELECT e.id_equipo, e.especialidad_equipo, p.nombre_proyecto, s.nombre_estado FROM equipos e LEFT JOIN proyectos p ON e.id_proyecto_id = p.id_proyecto LEFT JOIN estados s ON e.id_estado_id = s.id_estado";
   conexion.query(sql, (error, resultado) => {
-    if (error) return respuesta.json({ mensaje: "Error"});
-    return respuesta.json({Estatus: "Exitoso", contenido: resultado});
+    if (error) return respuesta.json({ mensaje: "Error" });
+    return respuesta.json({ Estatus: "Exitoso", contenido: resultado });
   });
 });
 
 //mostrar equipos de manera mas reciente ---------------------------------
 app.get("/obtenerEquiposInvertido", (peticion, respuesta) => {
-  const sql = "SELECT e.id_equipo, e.especialidad_equipo, p.nombre_proyecto, s.nombre_estado FROM equipos e LEFT JOIN proyectos p ON e.id_proyecto_id = p.id_proyecto LEFT JOIN estados s ON e.id_estado_id = s.id_estado ORDER BY p.fecha_creacion DESC";
-  
+  const sql =
+    "SELECT e.id_equipo, e.especialidad_equipo, p.nombre_proyecto, s.nombre_estado FROM equipos e LEFT JOIN proyectos p ON e.id_proyecto_id = p.id_proyecto LEFT JOIN estados s ON e.id_estado_id = s.id_estado ORDER BY p.fecha_creacion DESC";
+
   conexion.query(sql, (error, resultado) => {
     if (error) {
-      return respuesta.json({ mensaje: "Error"});
+      return respuesta.json({ mensaje: "Error" });
     }
     return respuesta.json({ Estatus: "Exitoso", contenido: resultado });
   });
@@ -641,11 +639,16 @@ app.delete("/eliminarEquipo/:id", (peticion, respuesta) => {
   const idEquipo = peticion.params.id;
   const sql = "DELETE FROM equipos WHERE id_equipo = ?";
   conexion.query(sql, [idEquipo], (error, resultado) => {
-      if (error) {
-          console.error('Error al eliminar el equipo:', error);
-          return respuesta.status(500).json({ Estatus: "Error", mensaje: "Error interno del servidor" });
-      }
-      return respuesta.json({ Estatus: "Exitoso", mensaje: "Equipo eliminado exitosamente" });
+    if (error) {
+      console.error("Error al eliminar el equipo:", error);
+      return respuesta
+        .status(500)
+        .json({ Estatus: "Error", mensaje: "Error interno del servidor" });
+    }
+    return respuesta.json({
+      Estatus: "Exitoso",
+      mensaje: "Equipo eliminado exitosamente",
+    });
   });
 });
 
@@ -654,20 +657,28 @@ app.post("/actualizarEquipo/:idEquipo", (peticion, respuesta) => {
   const idEquipo = peticion.params.idEquipo;
   const { especialidad, idEstado } = peticion.body;
 
-  const sql = "UPDATE equipos SET especialidad_equipo = ?, id_estado_id = ? WHERE id_equipo = ?";
-  
-  conexion.query(sql, [especialidad, idEstado, idEquipo], (error, resultado) => {
-      if (error) return respuesta.json({ mensaje: "Error al actualizar el equipo" });
-      return respuesta.json({ Estatus: "Exitoso", mensaje: "Equipo actualizado exitosamente" });
-  });
+  const sql =
+    "UPDATE equipos SET especialidad_equipo = ?, id_estado_id = ? WHERE id_equipo = ?";
+
+  conexion.query(
+    sql,
+    [especialidad, idEstado, idEquipo],
+    (error, resultado) => {
+      if (error)
+        return respuesta.json({ mensaje: "Error al actualizar el equipo" });
+      return respuesta.json({
+        Estatus: "Exitoso",
+        mensaje: "Equipo actualizado exitosamente",
+      });
+    }
+  );
 });
 //Obtener miembros -----------------------------------------------------
-app.get("/obtenerMiembros",(peticion,respuesta)=>{
-  const sql="SELECT m.id_miembro, u.nombre_usuario, e.nombre_equipo, re.nombre_rol_equipo, es.nombre_estado FROM miembros m INNER JOIN usuarios u ON m.id_usuario_id = u.id_usuario INNER JOIN equipos e ON m.id_equipo_id = e.id_equipo INNER JOIN roles_equipos re ON m.id_rol_equipo_id = re.id_rol_equipo INNER JOIN estados es ON m.id_estado_id = es.id_estado";
-  conexion.query(sql,(error,resultado)=>{
-    if(error) return respuesta.json({mensaje:"Error"});
-    return respuesta.json({Estatus:"Exitoso",contenido:resultado});
+app.get("/obtenerMiembros", (peticion, respuesta) => {
+  const sql =
+    "SELECT m.id_miembro, u.nombre_usuario, e.nombre_equipo, re.nombre_rol_equipo, es.nombre_estado FROM miembros m INNER JOIN usuarios u ON m.id_usuario_id = u.id_usuario INNER JOIN equipos e ON m.id_equipo_id = e.id_equipo INNER JOIN roles_equipos re ON m.id_rol_equipo_id = re.id_rol_equipo INNER JOIN estados es ON m.id_estado_id = es.id_estado";
+  conexion.query(sql, (error, resultado) => {
+    if (error) return respuesta.json({ mensaje: "Error" });
+    return respuesta.json({ Estatus: "Exitoso", contenido: resultado });
   });
 });
-
-
