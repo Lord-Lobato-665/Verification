@@ -18,6 +18,9 @@ import CreateUserAdmin from "./components/CreateUserAdmin";
 import Home from "./Pages/Home";
 import Mision from "./Pages/Mision";
 import AboutUs from "./Pages/AboutUs";
+import ProjectsAdmin from "./Pages/ProjectsAdmin";
+import RutaProtegidaAdmin from "./components/protectedRoutes/RutaProtegidaAdmin";
+import RutaProtegidaUsuario from "./components/protectedRoutes/RutaProtegidaUsuario";
 function App() {
 
 
@@ -40,6 +43,9 @@ function App() {
           <Route path="/users" element={<UsersAdmin />} />
           <Route path="/users/edit/:id" element={<EditAdmin />} />
           <Route path="/users/add" element={<CreateUserAdmin />} />
+          <Route path="/Admin" element={<RutaProtegidaAdmin><HomeAdmin /></RutaProtegidaAdmin>} />
+          <Route path="/user" element={<RutaProtegidaUsuario><HomeUser /></RutaProtegidaUsuario>} />
+          <Route path="/projects" element={<ProjectsAdmin />} />
 
           <Route path="/members" element={<MembersAdmin />} />
           <Route path="/members/add" element={<AddMember />} />
