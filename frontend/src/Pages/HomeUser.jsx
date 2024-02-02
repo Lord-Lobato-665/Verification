@@ -16,6 +16,7 @@ const HomeUser = () => {
   const [showDeleteAlert, setShowDeleteAlert] = useState(false);
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
   const [showDetailsModal, setShowDetailsModal] = useState(false);
+  const [memberToDelete, setMemberToDelete] = useState(null);
 
   const fetchTeams = async () => {
     try {
@@ -65,9 +66,29 @@ const HomeUser = () => {
     setEditedTeam(null);
   };
 
-  const openDetailsModal = (team) => {
-    setSelectedTeam(team);
-    setShowDetailsModal(true);
+  const openDetailsModal = async (team) => {
+    try {
+      const response = await fetch(`http://localhost:8081/obtenerMiembrosPorEquipo/${team.id_equipo}`);
+      if (!response.ok) {
+        throw new Error(`Error en la solicitud: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      console.log('Respuesta del servidor:', data);
+
+      if (data.Estatus === 'Exitoso') {
+        setSelectedTeam({ ...team, miembros: data.contenidoMiembros });
+        setShowDetailsModal(true);
+      } else {
+        console.error('Error al obtener miembros del equipo');
+        // Muestra una alerta de error en caso de fallo
+        setShowErrorAlert(true);
+      }
+    } catch (error) {
+      console.error('Error de red:', error);
+      // Muestra una alerta de error en caso de fallo
+      setShowErrorAlert(true);
+    }
   };
 
   const closeDetailsModal = () => {
@@ -108,6 +129,40 @@ const HomeUser = () => {
       console.error('Error de red:', error);
     }
   };
+
+  const handleDeleteMiembro = async () => {
+    try {
+      const response = await fetch(`http://localhost:8081/eliminarMiembro/${memberToDelete}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error en la solicitud: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+
+      if (data.Estatus === 'Exitoso') {
+        // Mostrar alerta de éxito después de la eliminación exitosa
+        setShowSuccessAlert(true);
+        console.log('Miembro eliminado exitosamente');
+        // Vuelve a cargar los miembros después de la eliminación
+        openDetailsModal(selectedTeam);
+      } else {
+        console.error('Error en la respuesta del servidor:', data);
+      }
+    } catch (error) {
+      console.error('Error de red:', error);
+    } finally {
+      // Cerrar la alerta de éxito después de un tiempo (puedes ajustar el tiempo)
+      setTimeout(() => {
+        setShowSuccessAlert(false);
+      }, 3000);
+      // Restablecer el estado memberToDelete
+      setMemberToDelete(null);
+    }
+  };
+
   const handleDelete = async (equipoId) => {
     // Mostrar cuadro de diálogo de confirmación
     const userConfirmed = window.confirm('¿Estás seguro de eliminar este equipo?');
@@ -212,17 +267,36 @@ const HomeUser = () => {
           {selectedTeam && (
             <div className="modal-content">
               <h2>{selectedTeam.nombre_equipo}</h2>
-              <div className="modal-details">
-                <p>Especialidad: {selectedTeam.especialidad_equipo}</p>
+
+              <div className='ab'>
                 <p>Proyecto: {selectedTeam.nombre_proyecto}</p>
+                <p>Especialidad: {selectedTeam.especialidad_equipo}</p>
                 <p>Estado: {selectedTeam.nombre_estado}</p>
+                <button className="modal-button" onClick={closeDetailsModal}>
+                  Cerrar
+                </button>
+                <br />
+                <br />
+                <h3>Miembros del Equipo:</h3>
               </div>
-              <button className="modal-button" onClick={closeDetailsModal}>
-                Cerrar
-              </button>
+              <div className="modal-details">
+                {selectedTeam.miembros && selectedTeam.miembros.map((miembro) => (
+                  <div className="member-card" key={miembro.id_miembro}>
+                    <h4>{miembro.nombre_usuario}</h4>
+                    <p>Rol: {miembro.nombre_rol_equipo}</p>
+                    <button
+                      className="delete-member"
+                      onClick={() => setMemberToDelete(miembro.id_miembro)}
+                    >
+                      ELIMINAR
+                    </button>
+                  </div>
+                ))}
+              </div>
             </div>
           )}
         </Modal>
+
         <Modal
           isOpen={editedTeam !== null}
           onRequestClose={closeModal}
