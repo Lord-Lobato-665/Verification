@@ -33,6 +33,7 @@ function SideBarAdmin() {
                     </div>
                 </div>
                 <ul className="nav_list desing-list">
+                    <br />
                     <li className="contain-li">
                         <Link to="/resources" className="link-container">
                             <span>Recursos</span>
