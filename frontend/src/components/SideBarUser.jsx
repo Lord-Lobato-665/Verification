@@ -3,6 +3,7 @@ import { MdAccessTimeFilled } from 'react-icons/md';
 import { ImUsers, ImUser } from 'react-icons/im';
 import { FaPlus } from 'react-icons/fa';
 import LogoTaskUnity from '../images/logodos.png';
+import Cube from '../components/Cube';
 import '../styles/SideBarUser.css';
 
 function SideBarUser() {
@@ -63,7 +64,8 @@ function SideBarUser() {
       </div>
       <div>
         <div className="logo-container-user">
-          <img src={LogoTaskUnity} alt="img" className="logo-img-user" />
+          <Cube/>
+          {<img src={LogoTaskUnity} alt="img" className="logo-img-user" />}
         </div>
       </div>
       <br />

@@ -7,6 +7,7 @@ import { FaUserGear, FaUsersGear } from "react-icons/fa6";
 import { BiLogOut } from "react-icons/bi";
 import LogoTaskUnity from "../images/logodos.png";
 import "../styles/SideBarAdmin.css";
+import Cube from '../components/Cube';
 
 function SideBarAdmin() {
     return (
@@ -20,10 +21,12 @@ function SideBarAdmin() {
                 <div>
                     <div className="logo-container">
                         <Link to="/Admin">
-                        <img src={LogoTaskUnity} alt="img" className="logo-img" />
+                            <Cube/>
+                        {<img src={LogoTaskUnity} alt="img" className="logo-img-user" />}
                         </Link>
                     </div>
                 </div>
+                <br />
                 <ul className="nav_list desing-list">
                     <li className="contain-li">
                         <Link to="/resources" className="link-container">
