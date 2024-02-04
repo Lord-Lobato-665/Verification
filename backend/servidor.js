@@ -3,10 +3,16 @@ import express from "express";
 import cors from "cors";
 import jsonwebtoken from "jsonwebtoken";
 import bcrypt from "bcrypt";
+import { jwtDecode } from "jwt-decode";
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    exposedHeaders: ["Authorization"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 
 //conexion a la base de datos
 
@@ -69,13 +75,13 @@ app.post("/login", (req, res) => {
           let path;
           switch (user.id_rol_id) {
             case 1:
-              path = '/home';
+              path = "/home";
               break;
             case 2:
-              path = '/user';
+              path = "/user";
               break;
             case 3:
-              path = '/Admin';
+              path = "/Admin";
               break;
             default:
               return res.status(401).send("Invalid user role");
@@ -96,27 +102,7 @@ app.post("/login", (req, res) => {
   );
 });
 
-
-// Middleware para verificar el token JWT
-function verificarToken(req, res, next) {
-  const bearerHeader = req.headers["authorization"];
-  if (typeof bearerHeader !== "undefined") {
-    const bearer = bearerHeader.split(" ");
-    const bearerToken = bearer[1];
-    jsonwebtoken.verify(bearerToken, "yourSecretKey", (err, authData) => {
-      if (err) {
-        res.sendStatus(403);
-      } else {
-        req.authData = authData;
-        next();
-      }
-    });
-  } else {
-    res.sendStatus(403);
-  }
-}
-
-// Middleware para verificar si el rol es Admin
+/* // Middleware para verificar si el rol es Admin
 function verificarAdmin(req, res, next) {
   verificarToken(req, res, () => {
     if (req.authData.role === "Admin") {
@@ -135,7 +121,7 @@ app.get("/rutaAdmin", verificarAdmin, (req, res) => {
 // Ruta para cualquier usuario autenticado
 app.get("/rutaUsuario", verificarToken, (req, res) => {
   // Lógica de la ruta para cualquier usuario autenticado
-});
+}); */
 
 app.post("/register", (req, res) => {
   // Obtén los datos del usuario desde el cuerpo de la solicitud
@@ -159,9 +145,11 @@ app.post("/register", (req, res) => {
           return res
             .status(500)
             .send("Error al guardar el usuario en la base de datos");
+        } else {
+          res.json({
+            Estatus: "Exitoso",
+          });
         }
-
-        res.status(201).send("Usuario registrado con éxito");
       }
     );
   });
@@ -426,16 +414,48 @@ app.post("/crearUsuario", (peticion, respuesta) => {
   );
 });
 
+// Middleware para verificar el token JWT
+function verificarToken(req, res, next) {
+  // Acceder al encabezado de autorización
+  const bearerHeader = req.headers["authorization"];
+  if (typeof bearerHeader !== "undefined") {
+    // Dividir el encabezado para obtener el token
+    const bearer = bearerHeader.split(" ");
+    const bearerToken = bearer[1];
+    // Guardar el token en la solicitud para su uso posterior
+    req.token = bearerToken;
+    next();
+  } else {
+    // Si no hay token, enviar una respuesta de error
+    res.sendStatus(403);
+  }
+}
+
 // Eliminar un usuario existente
 app.delete("/eliminarUsuario/:id", (peticion, respuesta) => {
   // Extracción del id del usuario desde los parámetros de la ruta
   const { id } = peticion.params;
+  console.log("ANTES DE LA FUNCION");
+
+  // Obtén el ID del usuario autenticado desde el token
+  const usuarioAutenticadoId = obtenerIdUsuarioDesdeToken(peticion);
+  console.log(usuarioAutenticadoId, "despues de la funcion");
+
+  // Verifica si el usuario que intenta eliminar es el mismo que está autenticado
+  if (usuarioAutenticadoId == id) {
+    console.log("no puedes eliminarte");
+    return respuesta.status(403).json({
+      Estatus: "Error",
+      Error: "No puedes eliminar tu propia cuenta",
+    });
+  }
 
   // Consulta SQL para eliminar un usuario de la base de datos
-  const sql = "DELETE FROM usuarios WHERE id_usuario = ?";
+  const sql =
+    "DELETE FROM usuarios  WHERE id_usuario = ?  AND (SELECT id_rol_id FROM usuarios WHERE id_usuario = ?) != 3";
 
   // Ejecución de la consulta
-  conexion.query(sql, [id], (error, resultado) => {
+  conexion.query(sql, [id, id], (error, resultado) => {
     if (error) {
       // Manejo de errores durante la eliminación
       console.error("Error al eliminar el usuario: ", error);
@@ -459,10 +479,27 @@ app.delete("/eliminarUsuario/:id", (peticion, respuesta) => {
   });
 });
 
+// Función para obtener el ID de usuario desde el token
+function obtenerIdUsuarioDesdeToken(req) {
+  console.log("Headers:", req.headers);
+
+  // Verificar si el encabezado "Authorization" está presente en la solicitud
+  if (req.headers["authorization"]) {
+    const token = req.headers["authorization"].split(" ")[1]; // Obtén el token desde las cabeceras
+    console.log("ENTRO EN MEDIO", token);
+    const decoded = jwtDecode(token);
+    console.log(decoded.id);
+    return decoded.id; // Retorna el ID de usuario desde el token
+  } else {
+    // Si el encabezado "Authorization" no está presente, devuelve un valor adecuado (por ejemplo, null o -1)
+    return null;
+  }
+}
+
 //mostrar todos los miembros
 app.get("/mostrarMiembros", (peticion, respuesta) => {
   const sql =
-    "select m.id_miembro,u.nombre_usuario,e.nombre_equipo,r.nombre_rol_equipo,s.nombre_estado from miembros as m inner join usuarios as u on m.id_usuario_id=u.id_usuario inner join equipos as e on m.id_equipo_id=e.id_equipo inner join roles_equipos as r on m.id_rol_equipo_id=r.id_rol_equipo inner join estados as s on m.id_estado_id=s.id_estado where id_rol_equipo_id=1";
+    "select m.id_miembro,u.nombre_usuario,e.nombre_equipo,r.nombre_rol_equipo,s.nombre_estado from miembros as m inner join usuarios as u on m.id_usuario_id=u.id_usuario inner join equipos as e on m.id_equipo_id=e.id_equipo inner join roles_equipos as r on m.id_rol_equipo_id=r.id_rol_equipo inner join estados as s on m.id_estado_id=s.id_estado where u.asignacion=1 and u.id_rol_id=1";
   conexion.query(sql, (error, resultado) => {
     if (error) {
       return respuesta.json({
@@ -506,13 +543,14 @@ app.post("/crearMiembro", (peticion, respuesta) => {
   });
 });
 
-// Eliminar un miembro comun
+// Eliminar un miembro
 app.delete("/eliminarMiembro/:id", (peticion, respuesta) => {
-  // Extracción del id del usuario desde los parámetros de la ruta
+
   const { id } = peticion.params;
+  console.log(typeof id);
 
   // Consulta SQL para eliminar un usuario de la base de datos
-  const sql = "delete from miembros where id_miembro=?";
+  const sql = "CALL EliminarMiembroYActualizarAsignacion(?)";
 
   // Ejecución de la consulta
   conexion.query(sql, [id], (error, resultado) => {
@@ -524,7 +562,7 @@ app.delete("/eliminarMiembro/:id", (peticion, respuesta) => {
         Error: "No se pudo eliminar el usuario",
       });
     } else if (resultado.affectedRows === 0) {
-      // Caso en el que no se encuentra el usuario a eliminar
+
       return respuesta.json({
         Estatus: "Error",
         Error: "Usuario no encontrado o ya fue eliminado",
@@ -680,5 +718,118 @@ app.get("/obtenerMiembros", (peticion, respuesta) => {
   conexion.query(sql, (error, resultado) => {
     if (error) return respuesta.json({ mensaje: "Error" });
     return respuesta.json({ Estatus: "Exitoso", contenido: resultado });
+  });
+});
+
+// Eliminar un proyecto
+app.delete("/eliminarProyecto/:id", (peticion, respuesta) => {
+  // Extracción del id del proyecto desde los parámetros de la ruta
+  const { id } = peticion.params;
+
+  // Consulta SQL para eliminar un usuario de la base de datos
+  const sql = "delete from proyectos where id_proyecto=?";
+
+  // Ejecución de la consulta
+  conexion.query(sql, [id], (error, resultado) => {
+    if (error) {
+      // Manejo de errores durante la eliminación
+      console.error("Error al eliminar el proyecto: ", error);
+      return respuesta.json({
+        Estatus: "Error",
+        Error: "No se pudo eliminar el usuario",
+      });
+    } else if (resultado.affectedRows === 0) {
+      // Caso en el que no se encuentra el usuario a eliminar
+      return respuesta.json({
+        Estatus: "Error",
+        Error: "Miembro no encontrado o ya fue eliminado",
+      });
+    } else {
+      // Respuesta exitosa indicando la eliminación del usuario
+      return respuesta.json({
+        Estatus: "Exitoso",
+        Mensaje: "Miembro eliminado con éxito",
+      });
+    }
+  });
+});
+
+//actualizar Miembro -----------------------------------------------------
+app.post("/actualizarMiembro/:id", (peticion, respuesta) => {
+  const id_miembro = peticion.params.id;
+  const { nombre_usuario } = peticion.body;
+
+  const sql =
+    "update usuarios set nombre_usuario=?  where id_usuario=(select id_usuario_id from miembros where id_miembro=?);";
+
+  conexion.query(sql, [nombre_usuario, id_miembro], (error, resultado) => {
+    if (error)
+      return respuesta.json({ mensaje: "Error al actualizar el Miembro" });
+    return respuesta.json({
+      Estatus: "Exitoso",
+      mensaje: "Mienmbro actualizado exitosamente",
+    });
+  });
+});
+
+//mostrar un miembro por id
+app.get("/mostrarMiembro/:id", (peticion, respuesta) => {
+  const { id } = peticion.params;
+  const sql =
+    "select m.id_miembro,u.nombre_usuario from miembros as m inner join usuarios as u on m.id_usuario_id=u.id_usuario  where id_miembro=?";
+  conexion.query(sql, [id], (error, resultado) => {
+    if (error) {
+      return respuesta.json({
+        Estatus: "Error",
+        Error: "No se completo la consulta",
+      });
+    } else {
+      return respuesta.json({
+        Estatus: "Exitoso",
+        contenido: resultado,
+      });
+    }
+  });
+});
+
+//crear proyecto con lider del proyecto
+app.post("/crearProyecto", (peticion, respuesta) => {
+  const datos = [
+    peticion.body.nombre_proyecto,
+    peticion.body.descripcion_proyecto,
+    peticion.body.id_usuario_id,
+    peticion.body.id_estado_id,
+  ];
+  const sql =
+    "INSERT INTO proyectos (nombre_proyecto, descripcion_proyecto,id_usuario_id,id_estado_id) VALUES (?,?,?,?)";
+  conexion.query(sql, datos, (error, resultado) => {
+    if (error) {
+      respuesta.json({
+        Estatus: "Error",
+      });
+    } else {
+      return respuesta.json({
+        Estatus: "Exitoso",
+        contenido: resultado,
+      });
+    }
+  });
+});
+
+//mostrar usuarios dignos de ser lider de proyectos
+app.get("/obtenerUsuariosDignos", (peticion, respuesta) => {
+  const sql =
+    "select id_usuario, nombre_usuario from usuarios where asignacion IS null and id_rol_id=1";
+  conexion.query(sql,(error,resultado)=>{
+    if(error){
+      return respuesta.json({
+        Estatus:"Error"
+      })
+    }else{
+      return respuesta.json({
+        Estatus:"Exitoso",
+        contenido:resultado
+      })
+    }
   });
 });

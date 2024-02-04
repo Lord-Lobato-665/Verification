@@ -1,54 +1,62 @@
-import React, { useState, useEffect } from 'react';
-import { MdAccessTimeFilled } from 'react-icons/md';
-import { ImUsers, ImUser } from 'react-icons/im';
-import { FaPlus } from 'react-icons/fa';
-import LogoTaskUnity from '../images/logodos.png';
-import Cube from '../components/Cube';
-import '../styles/SideBarUser.css';
+import React, { useState, useEffect } from "react";
+import { MdAccessTimeFilled } from "react-icons/md";
+import { ImUsers, ImUser } from "react-icons/im";
+import { FaPlus } from "react-icons/fa";
+import LogoTaskUnity from "../images/logodos.png";
+import Cube from "../components/Cube";
+import "../styles/SideBarUser.css";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { BiLogOut } from "react-icons/bi";
 
 function SideBarUser() {
   const [teams, setTeams] = useState([]);
   const [members, setMembers] = useState([]);
-  const [selectedTeam, setSelectedTeam] = useState('');
-  const [selectedMember, setSelectedMember] = useState('');
+  const [selectedTeam, setSelectedTeam] = useState("");
+  const [selectedMember, setSelectedMember] = useState("");
   const [orderByRecent, setOrderByRecent] = useState(false);
+  const navigate = useNavigate();
 
+  const handleLogout = () => {
+    localStorage.removeItem("token"); // Elimina el token de localStorage
+    navigate("/login"); // Redirige al usuario a la página de inicio de sesión
+  };
   const fetchTeams = async () => {
     try {
-      let endpoint = 'http://localhost:8081/obtenerEquipos';
+      let endpoint = "http://localhost:8081/obtenerEquipos";
 
       if (orderByRecent) {
-        endpoint = 'http://localhost:8081/obtenerEquiposInvertido';
+        endpoint = "http://localhost:8081/obtenerEquiposInvertido";
       }
 
       const response = await fetch(endpoint);
       const data = await response.json();
-      if (data.Estatus === 'Exitoso') {
+      if (data.Estatus === "Exitoso") {
         setTeams(data.contenido);
       } else {
-        console.log('Error al obtener equipos');
+        console.log("Error al obtener equipos");
       }
     } catch (error) {
-      console.error('Error de red', error);
+      console.error("Error de red", error);
     }
   };
 
   const handleSelectChange = (e) => {
     setSelectedTeam(e.target.value);
-    setOrderByRecent(e.target.value === 'recent');
+    setOrderByRecent(e.target.value === "recent");
   };
 
   const fetchMembers = async () => {
     try {
-      const response = await fetch('http://localhost:8081/obtenerMiembros');
+      const response = await fetch("http://localhost:8081/obtenerMiembros");
       const data = await response.json();
-      if (data.Estatus === 'Exitoso') {
+      if (data.Estatus === "Exitoso") {
         setMembers(data.contenido);
       } else {
-        console.log('Error al obtener miembros');
+        console.log("Error al obtener miembros");
       }
     } catch (error) {
-      console.error('Error de red', error);
+      console.error("Error de red", error);
     }
   };
 
@@ -64,7 +72,7 @@ function SideBarUser() {
       </div>
       <div>
         <div className="logo-container-user">
-          <Cube/>
+          <Cube />
           {<img src={LogoTaskUnity} alt="img" className="logo-img-user" />}
         </div>
       </div>
@@ -109,8 +117,8 @@ function SideBarUser() {
 
       <div className="container-buttons-user">
         {[
-          { icon: ImUsers, text: 'Equipo Nuevo' },
-          { icon: ImUser, text: 'Añadir Miembros' },
+          { icon: ImUsers, text: "Equipo Nuevo" },
+          { icon: ImUser, text: "Añadir Miembros" },
         ].map((button, index) => (
           <div key={index}>
             <button className="buttons-user">
@@ -125,6 +133,11 @@ function SideBarUser() {
             </button>
           </div>
         ))}
+
+        <Link onClick={handleLogout} className="yeye">
+          <span>Salir</span>
+          <BiLogOut className="" />
+        </Link>
       </div>
     </div>
   );

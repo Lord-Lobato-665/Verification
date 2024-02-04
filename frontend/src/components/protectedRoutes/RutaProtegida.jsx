@@ -42,6 +42,7 @@ const RutaProtegida = ({ children }) => {
       case "/users/add":
       case "/members":
       case "/members/add":
+      case "/project/add":
         return role === 3; // Administrador
       default:
         return false; // Ruta no permitida por defecto

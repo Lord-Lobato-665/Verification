@@ -6,7 +6,7 @@ import axios from "axios";
 import SideBarAdmin from "../components/SideBarAdmin";
 import HeaderAdmin from "../components/HeaderAdmin";
 import "../styles/ProjectsAdmin.css";
-
+import { Link } from "react-router-dom";
 const customStyles = {
   content: {
     top: "50%",
@@ -34,7 +34,7 @@ const ProjectsAdmin = () => {
       setProyectos(data.contenido);
     };
     mostrarProyectos();
-  }, [cambio]);
+  }, [cambio, proyectos]);
 
   async function mostrarProyectoEspecifico(id) {
     const response = await fetch(`http://localhost:8081/mostrarProyecto/${id}`);
@@ -59,20 +59,25 @@ const ProjectsAdmin = () => {
     if (proyectoSeleccionado && proyectoSeleccionado.id_proyecto) {
       // Asignar un valor numérico al estado basado en el nombre_estado
       const mapeoEstado = {
-        "Iniciado": 3,
+        Iniciado: 3,
         "En proceso": 4,
-        "Finalizado": 5
+        Finalizado: 5,
       };
-      const estadoNumerico = mapeoEstado[proyectoSeleccionado.nombre_estado] || proyectoSeleccionado.nombre_estado; // Por si acaso el estado no coincide
-  
+      const estadoNumerico =
+        mapeoEstado[proyectoSeleccionado.nombre_estado] ||
+        proyectoSeleccionado.nombre_estado; // Por si acaso el estado no coincide
+
       const proyectoActualizado = {
         ...proyectoSeleccionado,
         nombre_estado: estadoNumerico, // Usar el valor numérico para el estado
       };
-  
+
       try {
         await axios
-          .put(`http://localhost:8081/actualizarProyecto/${proyectoSeleccionado.id_proyecto}`, proyectoActualizado)
+          .put(
+            `http://localhost:8081/actualizarProyecto/${proyectoSeleccionado.id_proyecto}`,
+            proyectoActualizado
+          )
           .then((respuesta) => {
             if (respuesta.data.Estatus === "Exitoso") {
               closeModal(); // Cerrar el modal
@@ -86,7 +91,6 @@ const ProjectsAdmin = () => {
       }
     }
   };
-  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -95,6 +99,18 @@ const ProjectsAdmin = () => {
       [name]: value,
     }));
   };
+
+  async function borrarProyecto(id) {
+    if (window.confirm("¿Seguro que quieres eliminar este Proyecto?")) {
+      axios
+        .delete(`http://localhost:8081/eliminarProyecto/${id}`)
+        .then((respuesta) => {
+          if (respuesta.data.Estatus === "Exitoso") {
+            console.log("si");
+          }
+        });
+    }
+  }
 
   return (
     <>
@@ -112,6 +128,9 @@ const ProjectsAdmin = () => {
               />
               <FaSearch size={20} />
             </div>
+            <Link to="/project/add" className="btn-add-resource">
+              Nuevo
+            </Link>
           </div>
           <div className="cont-table-resource">
             <table className="content-table">
@@ -145,7 +164,12 @@ const ProjectsAdmin = () => {
                       </button>
                     </td>
                     <td>
-                      <button className="edit-trash-resource">
+                      <button
+                        className="edit-trash-resource"
+                        onClick={() => {
+                          borrarProyecto(proyecto.id_proyecto);
+                        }}
+                      >
                         <FaTrashAlt />
                       </button>
                     </td>
@@ -187,19 +211,30 @@ const ProjectsAdmin = () => {
                     </label>
                   </div>
                   <div className="label-modal-proyect">
-                  <select name="nombre_estado" value={proyectoSeleccionado.nombre_estado} onChange={handleChange}>
-  {/* Opción que refleja el estado actual del proyecto */}
-  <option value={proyectoSeleccionado.nombre_estado}>{proyectoSeleccionado.nombre_estado}</option>
+                    <select
+                      name="nombre_estado"
+                      value={proyectoSeleccionado.nombre_estado}
+                      onChange={handleChange}
+                    >
+                      {/* Opción que refleja el estado actual del proyecto */}
+                      <option value={proyectoSeleccionado.nombre_estado}>
+                        {proyectoSeleccionado.nombre_estado}
+                      </option>
 
-  {/* Otras opciones - asegúrate de que no se repita el valor actual de nombre_estado */}
-  {["En proceso", "Finalizado","Iniciado"].map((estado) => {
-    if (estado !== proyectoSeleccionado.nombre_estado) {
-      return <option key={estado} value={estado}>{estado}</option>;
-    }
-    return null; // No renderizar una opción si ya es la actual
-  })}
-</select>
-
+                      {/* Otras opciones - asegúrate de que no se repita el valor actual de nombre_estado */}
+                      {["En proceso", "Finalizado", "Iniciado"].map(
+                        (estado) => {
+                          if (estado !== proyectoSeleccionado.nombre_estado) {
+                            return (
+                              <option key={estado} value={estado}>
+                                {estado}
+                              </option>
+                            );
+                          }
+                          return null; // No renderizar una opción si ya es la actual
+                        }
+                      )}
+                    </select>
                   </div>
                   <button className="guardar-modal-proyect" type="submit">
                     Guardar

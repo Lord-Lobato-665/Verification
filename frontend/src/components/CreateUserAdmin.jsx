@@ -28,7 +28,7 @@ const CreateUserAdmin = () => {
    const handleSubmit = async (e) => {
     e.preventDefault(); // Previene el comportamiento por defecto del formulario
     try {
-      const response = await axios.post('http://localhost:8081/crearUsuario', nuevoUsuario);
+      const response = await axios.post('http://localhost:8081/register', nuevoUsuario);
       const data = response.data;
 
       if (data.Estatus === 'Exitoso') {

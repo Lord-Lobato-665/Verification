@@ -1,59 +1,67 @@
-.box-login{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #023047;
+.box-login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #023047;
 }
 .login-container {
-    background-color: #023047;
-    padding: 20px;
-    border-radius: 8px;
-    width: 300px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border: 1px solid white;
-  }
+  background-color: #023047;
+  padding: 20px;
+  border-radius: 8px;
+  width: 300px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid white;
+}
 
-  .login-container h2 {
-    color: #fff;
-    text-align: center;
-    margin-bottom: 20px;
-  }
+.login-container h2 {
+  color: #fff;
+  text-align: center;
+  margin-bottom: 20px;
+}
 
-  .cred-login {
+.cred-login {
   width: 240px;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: none;
-    border-radius: 5px;
-  }
+  padding: 10px;
+  margin-bottom: 15px;
+  border: none;
+  border-radius: 5px;
+}
 
-  .btn-login {
-    background-color: #00adb5;
-    color: #fff;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    text-align: center;
-  }
+.btn-login {
+  background-color: #00adb5;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+}
 
-  .btn-login:hover {
-    background-color: #26777a;
-  }
-  .cont-btn-login{
-    display: flex;
-    justify-content: center;
-  }
-  .label-login{
-    color: white;
-  }
+.btn-login:hover {
+  background-color: #26777a;
+}
+.cont-btn-login {
+  display: flex;
+  justify-content: center;
+}
+.label-login {
+  color: white;
+}
 
-  .link-register{
-    margin-top: 15px;
-    display: flex;
-    justify-content: center;
-    color: #fff;
-    text-decoration:underline;
-  }
+.link-register {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  color: #fff;
+  text-decoration: underline;
+  text-transform: none;
+}
 
+.yeye {
+  text-decoration: none;
+  background-color: #023047;
+  color: #fff;
+  padding: 10px;
+  border-radius: 15px;
+}

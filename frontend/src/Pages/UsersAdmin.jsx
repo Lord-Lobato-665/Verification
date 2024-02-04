@@ -25,9 +25,14 @@ const UsersAdmin = () => {
   }, [users]);
 
   function eliminarUsuario(id) {
-    if (window.confirm("¿Seguro que quieres eliminar este recurso?")) {
+    if (window.confirm("¿Seguro que quieres eliminar este Usuario?")) {
+      const token = localStorage.getItem("token"); //obtener el token
       axios
-        .delete(`http://localhost:8081/eliminarUsuario/${id}`)
+        .delete(`http://localhost:8081/eliminarUsuario/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`, // Agrega el token al header de la solicitud
+          },
+        })
         .then((respuesta) => {
           if (respuesta.data.Estatus === "Exitoso") {
             console.log("si");

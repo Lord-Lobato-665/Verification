@@ -1,15 +1,15 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 const Register = () => {
   const [user, setUser] = useState({
-    nombre: '',
-    email: '',
-    password: ''
+    nombre: "",
+    email: "",
+    password: "",
   });
 
-  const navegacion=useNavigate();
+  const navegacion = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -20,20 +20,30 @@ const Register = () => {
 
     // Validación básica
     if (!user.nombre || !user.email || !user.password) {
-      alert('Por favor, rellena todos los campos.');
+      alert("Por favor, rellena todos los campos.");
+      return;
+    }
+
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    if (!emailRegex.test(user.email)) {
+      alert("Por favor, ingresa un correo electrónico válido.");
+      return;
+    }
+    if (user.password.length < 3) {
+      alert("La contraseña debe tener al menos 3 caracteres.");
       return;
     }
 
     // Envía los datos al servidor
     try {
-      const response = await axios.post('http://localhost:8081/register', {
+      const response = await axios.post("http://localhost:8081/register", {
         nombre_usuario: user.nombre,
         correo_usuario: user.email,
-        contrasena_usuario: user.password
+        contrasena_usuario: user.password,
       });
 
-      console.log('Usuario registrado:', response.data);
-      navegacion("/login")
+      console.log("Usuario registrado:", response.data);
+      navegacion("/login");
     } catch (error) {
       // Maneja el error aquí
       // Por ejemplo, si el servidor devuelve un error:

@@ -18,7 +18,7 @@ import Home from "./Pages/Home";
 import Mision from "./Pages/Mision";
 import AboutUs from "./Pages/AboutUs";
 import ProjectsAdmin from "./Pages/ProjectsAdmin";
-
+import AddProjectAdmin from "./components/AddProjectAdmin";
 import RutaProtegida from "./components/protectedRoutes/RutaProtegida";
 
 function App() {
@@ -160,6 +160,14 @@ function App() {
             element={
               <RutaProtegida>
                 <RequestsAdmin />
+              </RutaProtegida>
+            }
+          />
+          <Route
+            path="/project/add"
+            element={
+              <RutaProtegida>
+                <AddProjectAdmin />
               </RutaProtegida>
             }
           />
