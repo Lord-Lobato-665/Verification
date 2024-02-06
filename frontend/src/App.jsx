@@ -19,6 +19,8 @@ import Mision from "./Pages/Mision";
 import AboutUs from "./Pages/AboutUs";
 import ProjectsAdmin from "./Pages/ProjectsAdmin";
 import AddProjectAdmin from "./components/AddProjectAdmin";
+import TareasUser from "./components/TareasUser";
+import AddPeticion from "./components/AddPeticion";
 import RutaProtegida from "./components/protectedRoutes/RutaProtegida";
 
 function App() {
@@ -33,6 +35,8 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/users/edit/:id" element={<EditAdmin />} />
           <Route path="/resources/edit/:id" element={<EditResource />} />
+          <Route path="/tareas" element={<TareasUser />} />
+          <Route path="/peticion" element={<AddPeticion />} />
 
           {/* Rutas para miembros comunes */}
           <Route

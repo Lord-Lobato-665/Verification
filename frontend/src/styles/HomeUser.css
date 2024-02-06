@@ -1,204 +1,204 @@
 .container-home-user {
-    position: absolute;
-    left: 280px;
-    width: 1080px;
-    height: 500px;
-    text-align: center;
-    font-size: 30px;
+  position: absolute;
+  left: 280px;
+  width: 1080px;
+  height: 500px;
+  text-align: center;
+  font-size: 30px;
 }
 
 /* Boton de crear */
 
 .button-create-project {
-    -moz-appearance: none;
-    -webkit-appearance: none;
-    appearance: none;
-    border: none;
-    background: none;
-    color: #0f1923;
-    cursor: pointer;
-    position: relative;
-    padding: 6px;
-    margin-bottom: 20px;
-    text-transform: uppercase;
-    font-weight: bold;
-    font-size: 14px;
-    transition: all .15s ease;
-  }
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  border: none;
+  background: none;
+  color: #0f1923;
+  cursor: pointer;
+  position: relative;
+  padding: 6px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 14px;
+  transition: all 0.15s ease;
+}
 
-  .plus-create-project {
-    font-size: 20px;
-  }
-  
-  .button-create-project::before,
-  .button-create-project::after {
-    content: '';
-    display: block;
-    position: absolute;
-    right: 0;
-    left: 0;
-    height: calc(50% - 5px);
-    border: 1px solid #7D8082;
-    transition: all .15s ease;
-  }
-  
-  .button-create-project::before {
-    top: 0;
-    border-bottom-width: 0;
-  }
-  
-  .button-create-project::after {
-    bottom: 0;
-    border-top-width: 0;
-  }
-  
-  .button-create-project:active,
-  .button-create-project:focus {
-    outline: none;
-  }
-  
-  .button-create-project:active::before,
-  .button-create-project:active::after {
-    right: 3px;
-    left: 3px;
-  }
-  
-  .button-create-project:active::before {
-    top: 3px;
-  }
-  
-  .button-create-project:active::after {
-    bottom: 3px;
-  }
-  
-  .button_lg-create-project {
-    position: relative;
-    display: block;
-    padding: 30px 30px;
-    color: #fff;
-    background-color: #023047;
-    overflow: hidden;
-    box-shadow: inset 0px 0px 0px 1px transparent;
-  }
-  
-  .button_lg-create-project::before {
-    content: '';
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 2px;
-    height: 2px;
-    background-color: #0f1923;
-  }
-  
-  .button_lg-create-project::after {
-    content: '';
-    display: block;
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    width: 4px;
-    height: 4px;
-    background-color: #0f1923;
-    transition: all .2s ease;
-  }
-  
-  .button_sl-create-project {
-    color: white;
-    display: block;
-    position: absolute;
-    top: 0;
-    bottom: -20px;
-    left: -20px;
-    width: 0;
-    background-color: #e67e22;
-    transform: skew(-15deg);
-    transition: all .2s ease;
-  }
-  
-  .button_text-create-project {
-    position: relative;
-  }
-  
-  .button-create-project:hover {
-    color: #0f1923;
-  }
-  
-  .button-create-project:hover .button_sl-create-project {
-    width: calc(100% + 15px);
-  }
-  
-  .button-create-project:hover .button_lg-create-project::after {
-    background-color: #fff;
-  }
+.plus-create-project {
+  font-size: 20px;
+}
 
-  .project-view-container {
-    width: 1080px;
-    height: 420px;
-    margin-top: 20px;
-    text-align: center;
-    align-items: center;
-    justify-content: center;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 30px;
-    overflow-y: auto; /* Agrega un scrollbar vertical cuando sea necesario */
+.button-create-project::before,
+.button-create-project::after {
+  content: "";
+  display: block;
+  position: absolute;
+  right: 0;
+  left: 0;
+  height: calc(50% - 5px);
+  border: 1px solid #7d8082;
+  transition: all 0.15s ease;
+}
+
+.button-create-project::before {
+  top: 0;
+  border-bottom-width: 0;
+}
+
+.button-create-project::after {
+  bottom: 0;
+  border-top-width: 0;
+}
+
+.button-create-project:active,
+.button-create-project:focus {
+  outline: none;
+}
+
+.button-create-project:active::before,
+.button-create-project:active::after {
+  right: 3px;
+  left: 3px;
+}
+
+.button-create-project:active::before {
+  top: 3px;
+}
+
+.button-create-project:active::after {
+  bottom: 3px;
+}
+
+.button_lg-create-project {
+  position: relative;
+  display: block;
+  padding: 30px 30px;
+  color: #fff;
+  background-color: #023047;
+  overflow: hidden;
+  box-shadow: inset 0px 0px 0px 1px transparent;
+}
+
+.button_lg-create-project::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2px;
+  height: 2px;
+  background-color: #0f1923;
+}
+
+.button_lg-create-project::after {
+  content: "";
+  display: block;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 4px;
+  height: 4px;
+  background-color: #0f1923;
+  transition: all 0.2s ease;
+}
+
+.button_sl-create-project {
+  color: white;
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: -20px;
+  left: -20px;
+  width: 0;
+  background-color: #e67e22;
+  transform: skew(-15deg);
+  transition: all 0.2s ease;
+}
+
+.button_text-create-project {
+  position: relative;
+}
+
+.button-create-project:hover {
+  color: #0f1923;
+}
+
+.button-create-project:hover .button_sl-create-project {
+  width: calc(100% + 15px);
+}
+
+.button-create-project:hover .button_lg-create-project::after {
+  background-color: #fff;
+}
+
+.project-view-container {
+  width: 1080px;
+  height: 420px;
+  margin-top: 20px;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  overflow-y: auto; /* Agrega un scrollbar vertical cuando sea necesario */
 }
 
 .icon-create-project {
-    margin-top: 10px;
-    font-size: 25px;
-    display: flex;
-    gap: 6px;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
+  margin-top: 10px;
+  font-size: 25px;
+  display: flex;
+  gap: 6px;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
 }
 
 .edit-icon:hover {
-    color: rgb(0, 118, 0);
+  color: rgb(0, 118, 0);
 }
 
 .edit-icon:active {
-    transform: scale(1.2);
+  transform: scale(1.2);
 }
 
 .delete-icon:hover {
-    color: rgb(184, 0, 0);
+  color: rgb(184, 0, 0);
 }
 
 .delete-icon:active {
-    transform: scale(1.2);
+  transform: scale(1.2);
 }
 
 .view-project {
-    width: 200px;
-    height: 210px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    border: 2px solid #0f1923;
-    background-color: #023047; /* Azul */
-    color: #ffffff; /* Blanco para el texto */
-    font-size: 15px;
-    transition: 0.4s;
+  width: 200px;
+  height: 210px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border: 2px solid #0f1923;
+  background-color: #023047; /* Azul */
+  color: #ffffff; /* Blanco para el texto */
+  font-size: 15px;
+  transition: 0.4s;
 }
 
 .view-project-decoration {
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-    border: #ffffff solid 2px;
-    width: 190px;
-    height: 200px;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  border: #ffffff solid 2px;
+  width: 190px;
+  height: 200px;
 }
 
 /* Estilo para resaltar al pasar el mouse */
 .view-project:hover {
-    background-color: #e67e22; /* Naranja */
-    cursor: pointer;
+  background-color: #e67e22; /* Naranja */
+  cursor: pointer;
 }
 
 /* Modal */
@@ -331,7 +331,7 @@
 }
 
 .Modal-information {
-  width: 400px;
+  width: 500px;
 }
 
 .Modal-information .modal-content {
@@ -381,7 +381,7 @@
 /* 
 .Modal-information .modal-details {
   margin-top: 100px;
-} *//* 
+} */ /* 
 
 .Modal-information .modal-details p {
   margin: 0;
@@ -397,7 +397,6 @@
   color: white;
 }
 
-
 .Modal-information .member-card {
   border: 1px solid #ddd;
   border-radius: 4px;
@@ -405,7 +404,6 @@
   margin-bottom: 10px;
   transition: 0.4s;
 }
-
 
 .member-card:hover {
   background-color: white;
@@ -472,7 +470,7 @@
   padding: 10px 20px;
   border-radius: 4px;
   background-color: #ffffff;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
   font-size: 12px;
   font-weight: bold;
   color: #023047;

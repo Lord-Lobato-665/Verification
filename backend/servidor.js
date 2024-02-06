@@ -4,6 +4,8 @@ import cors from "cors";
 import jsonwebtoken from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { jwtDecode } from "jwt-decode";
+import fs from "fs";
+import htttps from "https";
 
 const app = express();
 app.use(express.json());
@@ -545,7 +547,6 @@ app.post("/crearMiembro", (peticion, respuesta) => {
 
 // Eliminar un miembro
 app.delete("/eliminarMiembro/:id", (peticion, respuesta) => {
-
   const { id } = peticion.params;
   console.log(typeof id);
 
@@ -562,7 +563,6 @@ app.delete("/eliminarMiembro/:id", (peticion, respuesta) => {
         Error: "No se pudo eliminar el usuario",
       });
     } else if (resultado.affectedRows === 0) {
-
       return respuesta.json({
         Estatus: "Error",
         Error: "Usuario no encontrado o ya fue eliminado",
@@ -693,14 +693,14 @@ app.delete("/eliminarEquipo/:id", (peticion, respuesta) => {
 //actualizar equipo -----------------------------------------------------
 app.post("/actualizarEquipo/:idEquipo", (peticion, respuesta) => {
   const idEquipo = peticion.params.idEquipo;
-  const { especialidad, idEstado } = peticion.body;
+  const { nombreEquipo, especialidad, idEstado } = peticion.body;
 
   const sql =
-    "UPDATE equipos SET especialidad_equipo = ?, id_estado_id = ? WHERE id_equipo = ?";
+    "UPDATE equipos SET nombre_equipo=?, especialidad_equipo = ?, id_estado_id = ? WHERE id_equipo = ?";
 
   conexion.query(
     sql,
-    [especialidad, idEstado, idEquipo],
+    [nombreEquipo, especialidad, idEstado, idEquipo],
     (error, resultado) => {
       if (error)
         return respuesta.json({ mensaje: "Error al actualizar el equipo" });
@@ -726,8 +726,8 @@ app.delete("/eliminarProyecto/:id", (peticion, respuesta) => {
   // Extracción del id del proyecto desde los parámetros de la ruta
   const { id } = peticion.params;
 
-  // Consulta SQL para eliminar un usuario de la base de datos
-  const sql = "delete from proyectos where id_proyecto=?";
+  // Consulta SQL para eliminar un proyecto de la base de datos
+  const sql = "call sp_EliminarProyecto(?)";
 
   // Ejecución de la consulta
   conexion.query(sql, [id], (error, resultado) => {
@@ -792,19 +792,41 @@ app.get("/mostrarMiembro/:id", (peticion, respuesta) => {
   });
 });
 
-//crear proyecto con lider del proyecto
 app.post("/crearProyecto", (peticion, respuesta) => {
+  // Extraer los datos del cuerpo de la petición
+  const { nombre_proyecto, descripcion_proyecto, id_usuario_id, id_estado_id } =
+    peticion.body;
+
+  // Definir la llamada al procedimiento almacenado con los parámetros
+  const sql = "CALL sp_CrearProyecto(?, ?, ?, ?)";
+
+  // Los datos a pasar al procedimiento almacenado
   const datos = [
-    peticion.body.nombre_proyecto,
-    peticion.body.descripcion_proyecto,
-    peticion.body.id_usuario_id,
-    peticion.body.id_estado_id,
+    nombre_proyecto,
+    descripcion_proyecto,
+    id_usuario_id,
+    id_estado_id,
   ];
-  const sql =
-    "INSERT INTO proyectos (nombre_proyecto, descripcion_proyecto,id_usuario_id,id_estado_id) VALUES (?,?,?,?)";
+
+  // Ejecutar la llamada al procedimiento almacenado
   conexion.query(sql, datos, (error, resultado) => {
     if (error) {
-      respuesta.json({
+      // Manejar el error
+      respuesta.json({ Estatus: "Error", mensaje: error.message });
+    } else {
+      // Enviar la respuesta exitosa
+      respuesta.json({ Estatus: "Exitoso", contenido: resultado });
+    }
+  });
+});
+
+//mostrar usuarios dignos de ser lider de proyectos
+app.get("/obtenerUsuariosDignos", (peticion, respuesta) => {
+  const sql =
+    "select id_usuario, nombre_usuario from usuarios where asignacion IS null and id_rol_id=1";
+  conexion.query(sql, (error, resultado) => {
+    if (error) {
+      return respuesta.json({
         Estatus: "Error",
       });
     } else {
@@ -816,20 +838,133 @@ app.post("/crearProyecto", (peticion, respuesta) => {
   });
 });
 
-//mostrar usuarios dignos de ser lider de proyectos
-app.get("/obtenerUsuariosDignos", (peticion, respuesta) => {
+//mostrar equipos del lider del proyecto
+app.get("/obtenerEquiposLider/:id", (peticion, respuesta) => {
+  const idUser = peticion.params.id;
   const sql =
-    "select id_usuario, nombre_usuario from usuarios where asignacion IS null and id_rol_id=1";
-  conexion.query(sql,(error,resultado)=>{
-    if(error){
+    "select e.id_equipo,e.nombre_equipo,e.especialidad_equipo,e.id_proyecto_id,s.nombre_estado from equipos as e inner join proyectos as p on e.id_proyecto_id=p.id_proyecto inner join usuarios as u on u.id_usuario=p.id_usuario_id inner join estados as s on e.id_estado_id=s.id_estado where p.id_usuario_id=?";
+  conexion.query(sql, [idUser], (error, resultado) => {
+    if (error) {
       return respuesta.json({
-        Estatus:"Error"
-      })
-    }else{
+        Estatus: "Error",
+      });
+    } else {
       return respuesta.json({
-        Estatus:"Exitoso",
-        contenido:resultado
-      })
+        Estatus: "Exitoso",
+        contenido: resultado,
+      });
     }
   });
+});
+
+//mostrar proyecto del lider del proyecto
+app.get("/obtenerProyectoLider/:id", (peticion, respuesta) => {
+  const idUser = peticion.params.id;
+  const sql = "select *from proyectos where id_usuario_id =?";
+  conexion.query(sql, [idUser], (error, resultado) => {
+    if (error) {
+      return respuesta.json({
+        Estatus: "Error",
+      });
+    } else {
+      return respuesta.json({
+        Estatus: "Exitoso",
+        contenido: resultado,
+      });
+    }
+  });
+});
+
+//mostrar tareas si rol es 1 y asignacion es 1
+app.get("/obtenerTareasMiembro/:id", (peticion, respuesta) => {
+  const idUser = peticion.params.id;
+  const sql = "select asignacion,id_rol_id from usuarios where id_usuario=?";
+  conexion.query(sql, [idUser], (error, resultado) => {
+    if (error) {
+      return respuesta.json({
+        Estatus: "Error",
+        Menssaje: "Error al consultar el rol y la asignacion",
+      });
+    }
+    const pertenece = resultado[0].asignacion;
+    const rol = resultado[0].id_rol_id;
+    if (pertenece === 1 && rol === 1) {
+      const sql =
+        "select t.id_tarea,t.nombre_tarea,t.descripcion_tarea,es.nombre_estado from tareas as t inner join estados as es on t.id_estado_id=es.id_estado inner join miembros as m on t.id_miembro_id=m.id_miembro inner join usuarios as u on m.id_usuario_id=u.id_usuario where m.id_usuario_id=?";
+      conexion.query(sql, [idUser], (er, res) => {
+        if (er) {
+          return respuesta.json({
+            Estatus: "Error",
+            Mensaje: "Error al buscar las tareas",
+          });
+        } else {
+          respuesta.json({
+            Estatus: "Exitoso",
+            contenido: res,
+          });
+        }
+      });
+    }
+  });
+});
+
+//mostrar miembros por equipo usando el id del equipo como parámetro
+app.get("/obtenerMiembrosPorEquipo/:idEquipo", (peticion, respuesta) => {
+  const idEquipo = peticion.params.idEquipo;
+
+  const sql =
+    "SELECT m.id_miembro, u.nombre_usuario, e.nombre_equipo, re.nombre_rol_equipo, es.nombre_estado FROM miembros m INNER JOIN usuarios u ON m.id_usuario_id = u.id_usuario INNER JOIN equipos e ON m.id_equipo_id = e.id_equipo INNER JOIN roles_equipos re ON m.id_rol_equipo_id = re.id_rol_equipo INNER JOIN estados es ON m.id_estado_id = es.id_estado WHERE e.id_equipo = ?";
+
+  conexion.query(sql, [idEquipo], (error, resultado) => {
+    if (error) return respuesta.json({ mensaje: "Error" });
+    return respuesta.json({ Estatus: "Exitoso", contenido: resultado });
+  });
+});
+
+//crear miembros
+app.post("/addMiembro", (peticion, respuesta) => {
+  const { id_usuario } = peticion.body;
+  const { id_equipo } = peticion.body;
+  const { id_rol } = peticion.body;
+  const sql =
+    "INSERT INTO miembros (id_usuario_id, id_equipo_id, id_estado_id, id_rol_equipo_id) VALUES (?, ?, 12, ?)";
+  conexion.query(sql, [id_usuario, id_equipo, id_rol], (error, resultado) => {
+    if (error) {
+      return respuesta.json({
+        Estatus: "Error",
+        Mensaje: "Error al insertar",
+      });
+    } else {
+      return respuesta.json({
+        Estatus: "Exitoso",
+        contenido: resultado,
+      });
+    }
+  });
+});
+
+//crear tareas
+app.post("/addTarea", (peticion, respuesta) => {
+  const { nombre_tarea } = peticion.body;
+  const { descripcion_tarea } = peticion.body;
+  const { id_miembro } = peticion.body;
+  const sql =
+    "INSERT INTO tareas (nombre_tarea, descripcion_tarea, id_miembro_id, id_estado_id) VALUES(?,?,?,12)";
+  conexion.query(
+    sql,
+    [nombre_tarea, descripcion_tarea, id_miembro],
+    (error, resultado) => {
+      if (error) {
+        return respuesta.json({
+          Estatus: "Error",
+          Mensaje: "Error al insertar",
+        });
+      } else {
+        return respuesta.json({
+          Estatus: "Exitoso",
+          contenido: resultado,
+        });
+      }
+    }
+  );
 });

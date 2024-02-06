@@ -1,0 +1,14 @@
+.box-tar-user {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin: 30px;
+  border: 1px solid;
+}
+.name-tar-user {
+  padding: 30px;
+}
+
+.cart-tar-user {
+  border: 1px solid;
+}
