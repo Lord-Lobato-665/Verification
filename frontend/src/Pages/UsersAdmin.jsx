@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import SideBarAdmin from "../components/SideBarAdmin";
 import HeaderAdmin from "../components/HeaderAdmin";
 import axios from "axios";
+import { FaPlus } from "react-icons/fa";
 
 const UsersAdmin = () => {
   const [users, setUsers] = useState([]);
@@ -42,22 +43,13 @@ const UsersAdmin = () => {
   }
   return (
     <>
-      <HeaderAdmin />
       <SideBarAdmin />
       <div className="resource-table">
         <div className="box-resource">
-          <h2 className="title-resource">Usuarios</h2>
+          <h2 className="tittle">Usuarios</h2>
           <div className="search-resource">
-            <div className="border-search-resource">
-              <input
-                type="search"
-                placeholder="Buscar Usuario"
-                className="input-resource"
-              />
-              <FaSearch size={20} />
-            </div>
             <Link to="/users/add" className="btn-add-resource">
-              Nuevo
+              Nuevo <FaPlus />
             </Link>
           </div>
           <div className="cont-table-resource">

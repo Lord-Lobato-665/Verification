@@ -968,3 +968,60 @@ app.post("/addTarea", (peticion, respuesta) => {
     }
   );
 });
+
+// Enpoints para contar registros
+
+// Consultar todos los recursos
+app.get("/recursos", (req, res) => {
+  const sql = "SELECT * FROM recursos";
+  conexion.query(sql, (error, resultados) => {
+    if (error) {
+      return res.status(500).json({ mensaje: "Error al obtener recursos" });
+    }
+    return res.status(200).json({ recursos: resultados });
+  });
+});
+
+// Consultar todos los usuarios
+app.get("/usuarios", (req, res) => {
+  const sql = "SELECT * FROM usuarios";
+  conexion.query(sql, (error, resultados) => {
+    if (error) {
+      return res.status(500).json({ mensaje: "Error al obtener usuarios" });
+    }
+    return res.status(200).json({ usuarios: resultados });
+  });
+});
+
+// Consultar todos los proyectos
+app.get("/proyectos", (req, res) => {
+  const sql = "SELECT * FROM proyectos";
+  conexion.query(sql, (error, resultados) => {
+    if (error) {
+      return res.status(500).json({ mensaje: "Error al obtener proyectos" });
+    }
+    return res.status(200).json({ proyectos: resultados });
+  });
+});
+
+// Consultar todos los miembros
+app.get("/miembros", (req, res) => {
+  const sql = "SELECT * FROM miembros";
+  conexion.query(sql, (error, resultados) => {
+    if (error) {
+      return res.status(500).json({ mensaje: "Error al obtener miembros" });
+    }
+    return res.status(200).json({ miembros: resultados });
+  });
+});
+
+// Consultar todas las peticiones
+app.get("/peticiones", (req, res) => {
+  const sql = "SELECT * FROM peticiones";
+  conexion.query(sql, (error, resultados) => {
+    if (error) {
+      return res.status(500).json({ mensaje: "Error al obtener peticiones" });
+    }
+    return res.status(200).json({ peticiones: resultados });
+  });
+});

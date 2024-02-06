@@ -1,11 +1,82 @@
 .stats-table{
     display: flex;
     flex-wrap:wrap;
-    background-color: #8ECAE6;
+    background-color: #dedede;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     margin-left:280px;
-    min-height: 86.8vh;
+    height: 100vh;
 }
 
 /* CSS para el contenido */
 
+.cards-stats-container {
+    top: 160px;
+    left: 320px;
+    height: 250px;
+    width: 1000px;
+    position: absolute;/* 
+    border: black dotted; */
+    display: flex;
+    gap: 20px;
+}
+
+.card-stats {
+    width: 190px;
+    height: 250px;
+    background: #171717;
+    transition: 1s ease-in-out;
+    clip-path: polygon(30px 0%, 100% 0, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0 100%, 0% 30px);
+    border-top-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .card-stats span {
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    display: block;
+    font-size: 1em;
+  }
+  
+  .card-stats .info {
+    font-weight: 400;
+    color: white;
+    display: block;
+    text-align: center;
+    font-size: 0.72em;
+    margin: 1em;
+  }
+  
+  .card-stats .img {
+    width: 4.8em;
+    height: 4.8em;
+    background: white;
+    border-radius: 15px;
+    margin: auto;
+  }
+  
+  .card-stats .share {
+    margin-top: 1em;
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+  }
+  
+  .card-stats a {
+    color: white;
+    transition: .4s ease-in-out;
+  }
+  
+  .card-stats button {
+    padding: 10px 20px;
+    display: block;
+    margin: auto;
+    border-radius: 4px;
+    border: none;
+    font-weight: bold;
+    background: #ffffff;
+    color: rgb(0, 0, 0);
+    transition: .4s ease-in-out;
+  }

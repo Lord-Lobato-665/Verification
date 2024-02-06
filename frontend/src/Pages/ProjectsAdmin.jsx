@@ -7,6 +7,8 @@ import SideBarAdmin from "../components/SideBarAdmin";
 import HeaderAdmin from "../components/HeaderAdmin";
 import "../styles/ProjectsAdmin.css";
 import { Link } from "react-router-dom";
+import { FaPlus } from "react-icons/fa";
+
 const customStyles = {
   content: {
     top: "50%",
@@ -114,22 +116,13 @@ const ProjectsAdmin = () => {
 
   return (
     <>
-      <HeaderAdmin />
       <SideBarAdmin />
       <div className="resource-table">
         <div className="box-resource">
-          <h2 className="title-resource">Proyectos</h2>
+          <h2 className="tittle">Proyectos</h2>
           <div className="search-resource">
-            <div className="border-search-resource">
-              <input
-                type="search"
-                placeholder="Buscar proyecto"
-                className="input-resource"
-              />
-              <FaSearch size={20} />
-            </div>
             <Link to="/project/add" className="btn-add-resource">
-              Nuevo
+              Nuevo <FaPlus />
             </Link>
           </div>
           <div className="cont-table-resource">

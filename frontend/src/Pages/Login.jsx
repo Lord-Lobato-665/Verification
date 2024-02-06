@@ -24,7 +24,7 @@ const Login = () => {
       alert('Por favor, rellena todos los campos.');
       return;
     }
-    
+
 
     try {
       const response = await axios.post('http://localhost:8081/login', {
@@ -51,11 +51,14 @@ const Login = () => {
   return (
     <>
       <div className="box-login">
-        <div className="login-container">
+        <div className="login-container fade-in-left">
           <h2>Iniciar sesión</h2>
+              <br />
+              <br />
+              <br />
           <form onSubmit={handleSubmit}>
             <label htmlFor="email" className="label-login">
-              Correo Electrónico
+              <p className='tittle-label'>Correo Electrónico</p>
               <input
                 type="email"
                 name="email"
@@ -66,8 +69,11 @@ const Login = () => {
                 onChange={handleEmailChange}
               />
             </label>
+              <br />
+              <br />
+              <br />
             <label htmlFor="password" className="label-login">
-              Contraseña
+            <p className='tittle-label'>Contraseña</p>
               <input
                 type="password"
                 name="password"
@@ -78,9 +84,15 @@ const Login = () => {
                 onChange={handlePasswordChange}
               />
             </label>
+              <br />
+              <br />
+              <br />
             <div className="cont-btn-login">
-              <button type="submit" className="btn-login">
-                ¡Comienza ahora!
+              <button type="submit" class="button">
+                <span class="button_lg">
+                  <span class="button_sl"></span>
+                  <span class="button_text"> Comienza ahora! </span>
+                </span>
               </button>
             </div>
           </form>
@@ -88,7 +100,24 @@ const Login = () => {
             Registrarse
           </Link>
         </div>
+        <div className="color-one"></div>
       </div>
+      <div className='deco-ab'>
+          <div class="container">
+            <div class="card">
+              Explora tus ideas
+            </div>
+            <div class="card">
+              Deja fluir tu creatividad
+            </div>
+            <div class="card">
+              Maximiza tu eficiencia
+            </div>
+            <div class="card">
+              Trabaja con sinergia
+            </div>
+          </div>
+        </div>
     </>
   );
 };

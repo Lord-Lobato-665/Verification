@@ -44,7 +44,7 @@ const AddProjectAdmin = () => {
     );
     const { id_usuario } = usuarioselec;
 
-    proyecto.id_usuario_id=id_usuario;
+    proyecto.id_usuario_id = id_usuario;
 
     switch (proyecto.id_estado_id) {
       case "Iniciado":
@@ -78,81 +78,67 @@ const AddProjectAdmin = () => {
 
   return (
     <>
-      <HeaderAdmin />
       <SideBarAdmin />
       <div className="box-add-project">
         <h2>Crear Nuevo Proyecto</h2>
-        <form onSubmit={crearProyecto}>
-          <div className="label-name-project-admin">
-            <label htmlFor="">
-              Nombre del Proyecto
-              <br />
-              <input
-                type="text"
-                placeholder="Ingresa un nombre"
-                name="nombre_proyecto"
-                onChange={handleChange}
-                value={proyecto.nombre_proyecto}
-                required="true"
-              />
-            </label>
+        <form onSubmit={crearProyecto} className="form-add-project">
+          <div className="form-group">
+            <label htmlFor="nombre_proyecto">Nombre del Proyecto:</label>
+            <input
+              type="text"
+              id="nombre_proyecto"
+              placeholder="Ingresa un nombre"
+              name="nombre_proyecto"
+              value={proyecto.nombre_proyecto}
+              onChange={handleChange}
+              required
+            />
           </div>
-          <div className="label-name-project-admin">
-            <label htmlFor="">
-              Descripción del Proyecto
-              <br />
-              <input
-                type="text"
-                placeholder="Ingresa una descripción"
-                name="descripcion_proyecto"
-                onChange={handleChange}
-                value={proyecto.descripcion_proyecto}
-                required="true"
-              />
-            </label>
+          <div className="form-group">
+            <label htmlFor="descripcion_proyecto">Descripción del Proyecto:</label>
+            <input
+              type="text"
+              id="descripcion_proyecto"
+              placeholder="Ingresa una descripción"
+              name="descripcion_proyecto"
+              value={proyecto.descripcion_proyecto}
+              onChange={handleChange}
+              required
+            />
           </div>
-          <div className="label-name-project-admin">
-            <label htmlFor="">
-              Lider del Proyecto
-              <br />
-              <select
-                value={proyecto.nombre_usuario}
-                onChange={handleChange}
-                name="id_usuario_id"
-                required="true"
-              >
-                <option value="">Seleccione un Lider</option>
-                {Usuarios.map((usuario) => (
-                  <option
-                    key={usuario.id_usuario}
-                    value={usuario.nombre_usuario}
-                  >
-                    {usuario.nombre_usuario}
-                  </option>
-                ))}
-              </select>
-            </label>
+          <div className="form-group">
+            <label htmlFor="id_usuario_id">Líder del Proyecto:</label>
+            <select
+              id="id_usuario_id"
+              value={proyecto.id_usuario_id}
+              onChange={handleChange}
+              name="id_usuario_id"
+              required
+            >
+              <option value="">Seleccione un Líder</option>
+              {Usuarios.map((usuario) => (
+                <option key={usuario.id_usuario} value={usuario.id_usuario}>
+                  {usuario.nombre_usuario}
+                </option>
+              ))}
+            </select>
           </div>
-          <div className="label-name-project-admin">
-            <label htmlFor="">
-              Estado del Proyecto
-              <br />
-              <select
-                value={proyecto.id_estado_id}
-                onChange={handleChange}
-                name="id_estado_id"
-                required="true"
-              >
-                <option value="">Selecione un Estado</option>
-                <option value="Iniciado">Iniciado</option>
-                <option value="En proceso">En proceso</option>
-                <option value="Finalizado">Finalizado</option>
-              </select>
-            </label>
+          <div className="form-group">
+            <label htmlFor="id_estado_id">Estado del Proyecto:</label>
+            <select
+              id="id_estado_id"
+              value={proyecto.id_estado_id}
+              onChange={handleChange}
+              name="id_estado_id"
+              required
+            >
+              <option value="">Seleccione un Estado</option>
+              <option value="Iniciado">Iniciado</option>
+              <option value="En proceso">En proceso</option>
+              <option value="Finalizado">Finalizado</option>
+            </select>
           </div>
-          <button type="submit" className="btn-add-resource">
-            Crear
-          </button>
+          <button type="submit" className="btn-create-project">Crear</button>
         </form>
       </div>
     </>

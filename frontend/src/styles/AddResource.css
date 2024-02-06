@@ -1,48 +1,82 @@
-.form-add-resource{
-    min-height: 50vh;
-    margin-left: 290px;
-    margin-right: 10px;
-    background: #fff;
-}
-.cred-add-resource{
-    display: grid;
-    grid-template-columns: repeat(2,1fr);
-    gap: 40px;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-}
-.tittle-add-resource{
-    display: flex;
-    justify-content: center;
-    padding: 20px;
-}
-.input-add-resource{
-    display: flex;
-    flex-direction: column;
-    width: 300px;
-}
-.cont-a{
-    width: 100%;
-    display: flex;
-    justify-content: center;
+.form-add-resource {
+  position: absolute;
+  left: 490px;
+  width: 600px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  transition: box-shadow 0.3s ease;
+  border: black solid 1px;
 }
 
-.btn-create-resource{
-    border: 2px solid #11A556;
-    background-color: #15CE6C;
-    color: white;
-    border-radius: 8px;
-    margin-left: 5px;
-    padding: 5px;
-    margin-top: 25px;
-}
-.cont-btn-add-resource{
-    display: flex;
-    justify-content: center;
+.tittle-add-resource {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 24px;
 }
 
-.bg-add-resource{
-    background-color:#8ECAE6;
-    min-height: 88vh;
+.input-add-resource {
+  margin-bottom: 20px;
+}
+
+.input-add-resource label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.input-add-resource input,
+.input-add-resource select {
+  width: 550px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  transition: border-color 0.3s ease;
+}
+
+.input-add-resource input:focus,
+.input-add-resource select:focus {
+  outline: none;
+  border-color: #15ce6c;
+}
+
+.cont-btn-add-resource {
+  text-align: center;
+}
+
+.btn-create-resource {
+  border: 2px solid #11a556;
+  background-color: #15ce6c;
+  color: white;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-create-resource:hover {
+  background-color: #11a556;
+}
+
+.bg-add-resource {
+  background-color: #f9f9f9;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Animación */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.form-add-resource {
+  animation: fadeIn 0.5s ease;
 }

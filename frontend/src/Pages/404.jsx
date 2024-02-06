@@ -16,7 +16,7 @@ function PageNotFound() {
                     <img src={Image404} alt="img" className="logo-img-404" />
                 </div>
                 <dir className="buttom-404">
-                    <Link to="/Admin">
+                    <Link to="/home">
                     <button>
                         <span class="shadow"></span>
                         <span class="edge"></span>

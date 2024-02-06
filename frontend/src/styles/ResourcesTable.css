@@ -1,12 +1,12 @@
 .resource-table {
   display: flex;
   flex-wrap: wrap;
-  background-color: #8ecae6;
+  background-color: #dedede;
   height: 100%;
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   margin-left: 280px;
-  min-height: 86.8vh;
+  min-height: 100vh;
 }
 .title-resource {
   padding: 30px;
@@ -15,7 +15,7 @@
   color: black;
 }
 .search-resource {
-  margin-top: 30px;
+  margin-top: 100px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -66,14 +66,15 @@
   border: 0.8px solid;
 }
 .btn-add-resource {
-  border: 2px solid #11a556;
-  background-color: #15ce6c;
+  background-color: #023047;
   color: white;
-  border-radius: 8px;
-  margin-left: 5px;
-  padding: 5px;
+  border-radius: 4px;
   text-decoration: none;
+  text-align: center;
+  padding: 10px 20px;
+  font-weight: bolder;
 }
+
 .edit-trash-resource {
   text-decoration: none;
   color: #023047;

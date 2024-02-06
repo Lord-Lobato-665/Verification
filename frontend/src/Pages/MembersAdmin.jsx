@@ -6,7 +6,6 @@ import "../styles/MembersAdmin.css"
 const MembersAdmin = () => {
   return (
     <>
-      <HeaderAdmin />
       <SideBarAdmin />
       <MembersTable />
 

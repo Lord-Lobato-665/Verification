@@ -93,17 +93,11 @@ useEffect(()=>{
 
   return (
     <>
-    <HeaderAdmin/>
     <SideBarAdmin/>
     <div className="resource-table">
         <div className="box-resource">
-          <h2 className="title-resource">Peticiones</h2>
+          <h2 className="tittle">Peticiones</h2>
           <div className="search-resource">
-            <div className="border-search-resource">
-            <input type="search" placeholder="Buscar Petición"  className="input-resource"/>
-            <FaSearch size={20} />
-            </div>
-               
           </div>
           <div className="cont-table-resource">
             <div >

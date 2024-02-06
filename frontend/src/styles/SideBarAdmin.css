@@ -81,7 +81,7 @@
 }
 
 .contain-li:hover {
-    background-color: #317ea1;
+    background-color: #317da1b8;
     border-radius: 10px 30px 30px 10px;
     .link-container {
         font-size: 24px;

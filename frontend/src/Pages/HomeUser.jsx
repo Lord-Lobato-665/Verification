@@ -37,7 +37,7 @@ const HomeUser = () => {
   const enviarTarea = async () => {
     fintarea.id_miembro = idmiembro;
     console.log(fintarea);
-    if (fintarea.nombre_tarea != "" && fintarea.descripcion_tarea != ""){
+    if (fintarea.nombre_tarea != "" && fintarea.descripcion_tarea != "") {
       await axios
         .post("http://localhost:8081/addTarea", fintarea)
         .then((res) => {
@@ -341,16 +341,16 @@ const HomeUser = () => {
           {usuario &&
             usuario.map((e, index) => (
               <div key={index}>
-                <h1>Bienvenido {e.nombre_usuario}</h1>
+                <h2 className="titulo-equipos">Bienvenido {e.nombre_usuario}!</h2>
               </div>
             ))}
           {proyectos &&
             proyectos.map((e) => (
               <div key={e.id_proyecto}>
-                <h2>
+                <h3 className="subtitulo-equipos">
                   Proyecto al que perteneces{" "}
                   <strong>{e.nombre_proyecto}</strong>
-                </h2>
+                </h3>
               </div>
             ))}
           <p>---- Equipos ----</p>
@@ -422,12 +422,22 @@ const HomeUser = () => {
           {selectedTeam && (
             <div className="modal-content">
               <div className="ab">
-                <h4>Equipo:{selectedTeam.nombre_equipo}</h4>
+                <br />
+                <p>Equipo: {selectedTeam.nombre_equipo}</p>
                 <p>Especialidad: {selectedTeam.especialidad_equipo}</p>
                 <p>Estado: {selectedTeam.nombre_estado}</p>
+                <button className="modal-button" onClick={closeDetailsModal}>
+                  Cerrar
+                </button>
+                <button
+                  className="modal-button"
+                  style={{ margin: 10 }}
+                  onClick={añadirMiembro}
+                >
+                  AÑADIR MIEMBRO
+                </button>
                 <br />
-                <br />
-                <h4>Miembros del Equipo:</h4>
+                <p>Miembros del Equipo:</p>
               </div>
               <div className="modal-details">
                 {selectedTeam.miembros &&
@@ -453,16 +463,6 @@ const HomeUser = () => {
                     </div>
                   ))}
               </div>
-              <button className="modal-button" onClick={closeDetailsModal}>
-                Cerrar
-              </button>
-              <button
-                className="modal-button"
-                style={{ margin: 10 }}
-                onClick={añadirMiembro}
-              >
-                AÑADIR MIEMBRO
-              </button>
             </div>
           )}
         </Modal>

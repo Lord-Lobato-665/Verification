@@ -59,7 +59,6 @@ const AddResource = () => {
 
   return (
     <>
-      <HeaderAdmin />
       <SideBarAdmin />
       <div className="bg-add-resource">
         <form className="form-add-resource" onSubmit={CrearRecurso}>

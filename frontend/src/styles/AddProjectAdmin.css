@@ -1,7 +1,54 @@
 .box-add-project {
-  margin-left: 280px;
+  top: 80px;
+  position: absolute;
+  left: 490px;
+  width: 600px;
 }
 
-.label-name-project-admin {
-  border: 1px solid;
+.box-add-project {
+  width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+  border: black solid 1px;
 }
+
+.box-add-project h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.form-group input,
+.form-group select {
+  width: 550px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.btn-create-project {
+  background-color: #15ce6c;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-create-project:hover {
+  background-color: #11a556;
+}
+

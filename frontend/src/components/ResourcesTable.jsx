@@ -5,6 +5,8 @@ import { FaPencilAlt } from "react-icons/fa";
 import { FaTrashAlt } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import "../styles/Tittle.css";
+import { FaPlus } from "react-icons/fa";
 
 const ResourcesTable = () => {
   const [resources, setResources] = useState([]);
@@ -42,18 +44,10 @@ const ResourcesTable = () => {
     <>
       <div className="resource-table">
         <div className="box-resource">
-          <h2 className="title-resource">Recursos</h2>
+          <h1 className="tittle">Recursos</h1>
           <div className="search-resource">
-            <div className="border-search-resource">
-              <input
-                type="search"
-                placeholder="Buscar Recurso"
-                className="input-resource"
-              />
-              <FaSearch size={20} />
-            </div>
             <Link to="/resources/add" className="btn-add-resource">
-              Agregar
+              Agregar <FaPlus />
             </Link>
           </div>
           <div className="cont-table-resource">

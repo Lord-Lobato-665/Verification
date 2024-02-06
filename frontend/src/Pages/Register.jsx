@@ -54,11 +54,12 @@ const Register = () => {
   return (
     <>
       <div className="box-login">
-        <div className="login-container">
+        <div className="login-container fade-in-right">
           <h2>Registrarse</h2>
+          <br />
           <form onSubmit={handleSubmit}>
             <label htmlFor="nombre" className="label-login">
-              Nombre
+            <p className='tittle-label'>Nombre</p>
               <input
                 type="text"
                 name="nombre"
@@ -69,8 +70,10 @@ const Register = () => {
                 onChange={handleChange}
               />
             </label>
+            <br />
+            <br />
             <label htmlFor="email" className="label-login">
-              Correo Electrónico
+            <p className='tittle-label'>Correo Electrónico</p>
               <input
                 type="email"
                 name="email"
@@ -81,8 +84,10 @@ const Register = () => {
                 onChange={handleChange}
               />
             </label>
+            <br />
+            <br />
             <label htmlFor="password" className="label-login">
-              Contraseña
+            <p className='tittle-label'>Contraseña</p>
               <input
                 type="password"
                 name="password"
@@ -93,9 +98,13 @@ const Register = () => {
                 onChange={handleChange}
               />
             </label>
+            <br />
             <div className="cont-btn-login">
-              <button type="submit" className="btn-login">
-                Registrar
+              <button type="submit" class="button">
+                <span class="button_lg">
+                  <span class="button_sl"></span>
+                  <span class="button_text"> Registrar! </span>
+                </span>
               </button>
             </div>
             <Link className="link-register" to="/login">
@@ -103,7 +112,24 @@ const Register = () => {
             </Link>
           </form>
         </div>
+        <div className="color-one"></div>
       </div>
+      <div className='deco-ab'>
+          <div class="container">
+            <div class="card">
+            Descubre tu potencial
+            </div>
+            <div class="card">
+            Tu próximo gran proyecto te espera
+            </div>
+            <div class="card">
+             Alcanza tus metas
+            </div>
+            <div class="card">
+              Únete ahora!
+            </div>
+          </div>
+        </div>
     </>
   );
 };

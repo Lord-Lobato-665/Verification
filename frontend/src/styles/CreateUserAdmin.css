@@ -1,3 +1,57 @@
 .box-create-user{
     margin-left: 280px;
+    top: 100px;
 }
+
+.box-create-user {
+    position: absolute;
+    left: 490px;
+    width: 600px;
+    height: 400px;
+    padding: 20px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: black solid 1px;
+  }
+  
+  .box-create-user h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .form-create-user {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-group label {
+    margin-bottom: 5px;
+  }
+  
+  .form-group input {
+    width: 380px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .btn-create-user {
+    background-color: #15ce6c;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-create-user:hover {
+    background-color: #11a556;
+  }
+  

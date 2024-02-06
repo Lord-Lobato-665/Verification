@@ -6,7 +6,6 @@ const HomeAdmin = () => {
   return (
     <>
       <SideBarAdmin />
-      <HeaderAdmin />
       <StatsTable />
     </>
   )

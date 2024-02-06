@@ -93,16 +93,8 @@ const MembersTable = () => {
     <>
       <div className="resource-table">
         <div className="box-resource">
-          <h2 className="title-resource">Miembros</h2>
+          <h2 className="tittle">Miembros</h2>
           <div className="search-resource">
-            <div className="border-search-resource">
-              <input
-                type="search"
-                placeholder="Buscar miembro"
-                className="input-resource"
-              />
-              <FaSearch size={20} />
-            </div>
           </div>
           <div className="cont-table-resource">
             <div className="">

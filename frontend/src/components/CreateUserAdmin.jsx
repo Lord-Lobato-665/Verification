@@ -47,44 +47,46 @@ const CreateUserAdmin = () => {
   return (
     
     <>
-    <HeaderAdmin/>
     <SideBarAdmin/>
     <div className="box-create-user">
-      <h2>Crear Nuevo Usuario</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Nombre del Usuario:</label>
-          <input
-            type="text"
-            name="nombre_usuario"
-            value={nuevoUsuario.nombre_usuario}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label>Correo Electrónico:</label>
-          <input
-            type="email" // Usar type="email" para validación básica de email
-            name="correo_usuario"
-            value={nuevoUsuario.correo_usuario}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-            <label>Contraseña:</label>
-            <input
-              type="password" // Usar type="password" para ocultar la entrada
-              name="contrasena_usuario"
-              value={nuevoUsuario.contrasena_usuario}
-              onChange={handleChange}
-              required
-            />
-          </div>
-        <button type="submit">Crear Usuario</button>
-      </form>
+  <h2>Crear Nuevo Usuario</h2>
+  <form onSubmit={handleSubmit} className="form-create-user">
+    <div className="form-group">
+      <label htmlFor="nombre_usuario">Nombre del Usuario:</label>
+      <input
+        type="text"
+        id="nombre_usuario"
+        name="nombre_usuario"
+        value={nuevoUsuario.nombre_usuario}
+        onChange={handleChange}
+        required
+      />
     </div>
+    <div className="form-group">
+      <label htmlFor="correo_usuario">Correo Electrónico:</label>
+      <input
+        type="email"
+        id="correo_usuario"
+        name="correo_usuario"
+        value={nuevoUsuario.correo_usuario}
+        onChange={handleChange}
+        required
+      />
+    </div>
+    <div className="form-group">
+      <label htmlFor="contrasena_usuario">Contraseña:</label>
+      <input
+        type="password"
+        id="contrasena_usuario"
+        name="contrasena_usuario"
+        value={nuevoUsuario.contrasena_usuario}
+        onChange={handleChange}
+        required
+      />
+    </div>
+    <button type="submit" className="btn-create-user">Crear Usuario</button>
+  </form>
+</div>
     </>
   )
 }

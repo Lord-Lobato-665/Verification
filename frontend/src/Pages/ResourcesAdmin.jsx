@@ -5,7 +5,6 @@ import "../styles/ResourcesAdmin.css"
 const ResourcesAdmin = () => {
   return (
     <>
-      <HeaderAdmin />
       <SideBarAdmin />
       <ResourcesTable />
     </>
