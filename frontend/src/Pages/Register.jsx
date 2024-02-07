@@ -10,11 +10,55 @@ const Register = () => {
   });
 
   const navegacion = useNavigate();
+  const [error, setError] = useState("");
+
+  const getErrorColor = () => {
+    switch (error) {
+      case "contraseña Debil":
+        return "red"; // Rojo para contraseña débil
+      case "contraseña Normal":
+        return "orange"; // Naranja para contraseña normal
+      case "contraseña Buena":
+        return "green"; // Verde para contraseña buena
+      case "No puede contener el carácter '<'":
+        return "blue";
+      default:
+        return "black"; // Negro por defecto
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setUser({ ...user, [name]: value });
+    // Verifica si el campo modificado es 'nombre' y si contiene el carácter '<'
+    if (name === "nombre" && value.includes("<")) {
+      // Puedes establecer un mensaje de error o simplemente ignorar la entrada
+      setError("No puede contener el carácter '<'");
+    } else if (name === "email" && value.includes("<")) {
+      setError("No puede contener el carácter '<'");
+    } else {
+      // Si no es el campo 'nombre' o si el valor es válido, actualiza el estado normalmente
+      setUser({ ...user, [name]: value });
+      // Asegúrate de limpiar cualquier mensaje de error anterior si la entrada ahora es válida
+      if (error !== "") setError("");
+    }
   };
+
+  const passwor = (e) => {
+    const { value } = e.target;
+    console.log(value);
+    if (value.length <= 2) {
+      setError("contraseña Debil");
+    } else if (value.length <= 4) {
+      setError("contraseña Normal");
+    } else if (value.length > 4) {
+      setError("contraseña Buena");
+    }
+    setUser({
+      ...user,
+      password: value,
+    });
+  };
+  console.log(error);
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -29,8 +73,8 @@ const Register = () => {
       alert("Por favor, ingresa un correo electrónico válido.");
       return;
     }
-    if (user.password.length < 3) {
-      alert("La contraseña debe tener al menos 3 caracteres.");
+    if (user.password.length < 4) {
+      alert("La contraseña debe tener al menos 4 caracteres.");
       return;
     }
 
@@ -59,7 +103,7 @@ const Register = () => {
           <br />
           <form onSubmit={handleSubmit}>
             <label htmlFor="nombre" className="label-login">
-            <p className='tittle-label'>Nombre</p>
+              <p className="tittle-label">Nombre</p>
               <input
                 type="text"
                 name="nombre"
@@ -73,7 +117,7 @@ const Register = () => {
             <br />
             <br />
             <label htmlFor="email" className="label-login">
-            <p className='tittle-label'>Correo Electrónico</p>
+              <p className="tittle-label">Correo Electrónico</p>
               <input
                 type="email"
                 name="email"
@@ -87,7 +131,7 @@ const Register = () => {
             <br />
             <br />
             <label htmlFor="password" className="label-login">
-            <p className='tittle-label'>Contraseña</p>
+              <p className="tittle-label">Contraseña</p>
               <input
                 type="password"
                 name="password"
@@ -95,8 +139,12 @@ const Register = () => {
                 required
                 className="cred-login"
                 value={user.password}
-                onChange={handleChange}
+                onChange={passwor}
               />
+              <span style={{ color: getErrorColor() }} className="span-re">
+                <br />
+                {error}
+              </span>
             </label>
             <br />
             <div className="cont-btn-login">
@@ -114,22 +162,14 @@ const Register = () => {
         </div>
         <div className="color-one"></div>
       </div>
-      <div className='deco-ab'>
-          <div className="container">
-            <div className="card">
-            Descubre tu potencial
-            </div>
-            <div className="card">
-            Tu próximo gran proyecto te espera
-            </div>
-            <div className="card">
-             Alcanza tus metas
-            </div>
-            <div className="card">
-              Únete ahora!
-            </div>
-          </div>
+      <div className="deco-ab">
+        <div className="container">
+          <div className="card">Descubre tu potencial</div>
+          <div className="card">Tu próximo gran proyecto te espera</div>
+          <div className="card">Alcanza tus metas</div>
+          <div className="card">Únete ahora!</div>
         </div>
+      </div>
     </>
   );
 };

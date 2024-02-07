@@ -1,6 +1,5 @@
 import "../styles/AddProjectAdmin.css";
 import SideBarAdmin from "./SideBarAdmin";
-import HeaderAdmin from "./HeaderAdmin";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -40,8 +39,14 @@ const AddProjectAdmin = () => {
   async function crearProyecto(e) {
     e.preventDefault();
     const usuarioselec = Usuarios.find(
-      (e) => e.nombre_usuario == proyecto.id_usuario_id
+      (e) => e.id_usuario == proyecto.id_usuario_id
     );
+
+    /* el usuario no se ha podido buscar porque en el find no hay un nombre o id que coincida*/
+    if (usuarioselec === undefined) {
+      window.alert("usuario no reconocible");
+      return;
+    }
     const { id_usuario } = usuarioselec;
 
     proyecto.id_usuario_id = id_usuario;
@@ -95,7 +100,9 @@ const AddProjectAdmin = () => {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="descripcion_proyecto">Descripción del Proyecto:</label>
+            <label htmlFor="descripcion_proyecto">
+              Descripción del Proyecto:
+            </label>
             <input
               type="text"
               id="descripcion_proyecto"
@@ -138,7 +145,9 @@ const AddProjectAdmin = () => {
               <option value="Finalizado">Finalizado</option>
             </select>
           </div>
-          <button type="submit" className="btn-create-project">Crear</button>
+          <button type="submit" className="btn-create-project">
+            Crear
+          </button>
         </form>
       </div>
     </>

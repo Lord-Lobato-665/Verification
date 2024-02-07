@@ -2,6 +2,8 @@ import "../styles/TareasUser.css";
 import useStore from "./useStore";
 import axios from "axios";
 const TareasUser = () => {
+ 
+  
   const actutarea = async (id) => {
     console.log(id);
     console.log(tareas);

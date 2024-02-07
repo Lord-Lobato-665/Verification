@@ -711,6 +711,28 @@ app.post("/actualizarEquipo/:idEquipo", (peticion, respuesta) => {
     }
   );
 });
+
+//crear equipo nuevo
+app.post("/crearEquipo", (peticion, respuesta) => {
+  const { nombre_equipo, especialidad_equipo, id_proyecto } = peticion.body;
+
+  const sql =
+    "INSERT INTO equipos (nombre_equipo, especialidad_equipo, id_proyecto_id, id_estado_id) VALUES (?,?,?,6)";
+
+  conexion.query(
+    sql,
+    [nombre_equipo,especialidad_equipo,id_proyecto],
+    (error, resultado) => {
+      if (error)
+        return respuesta.json({ mensaje: "Error al actualizar el equipo" });
+      return respuesta.json({
+        Estatus: "Exitoso",
+        mensaje: "Equipo creado exitosamente",
+      });
+    }
+  );
+});
+
 //Obtener miembros -----------------------------------------------------
 app.get("/obtenerMiembros", (peticion, respuesta) => {
   const sql =
@@ -1032,8 +1054,7 @@ app.post("/marcarTarea/:id", (peticion, respuesta) => {
   const { id } = peticion.params;
 
   // Consulta SQL para insertar un nuevo miembro en la base de datos
-  const sql =
-    "update tareas set id_estado_id=8 where id_tarea=?";
+  const sql = "update tareas set id_estado_id=8 where id_tarea=?";
 
   // Ejecución de la consulta
   conexion.query(sql, [id], (error, resultado) => {
@@ -1053,3 +1074,59 @@ app.post("/marcarTarea/:id", (peticion, respuesta) => {
     }
   });
 });
+
+
+// agregar peticion
+app.post("/addPeticion", (peticion, respuesta) => {
+  // Extracción de datos del cuerpo de la petición
+  const {nombre_peticion,descripcion_peticion,id_miembro} = peticion.body;
+
+  // Consulta SQL para insertar una peticion
+  const sql = "INSERT INTO peticiones (nombre_peticion, descripcion_peticion, id_miembro_id, id_estado_id) VALUES (?,?,?, 13)";
+
+  // Ejecución de la consulta
+  conexion.query(sql, [nombre_peticion,descripcion_peticion,id_miembro], (error, resultado) => {
+    if (error) {
+      // Manejo de errores durante la inserción
+      console.error("Error al insertar una peticion: ", error);
+      return respuesta.json({
+        Estatus: "Error",
+        Error: "No se pudo crear la peticion",
+      });
+    } else {
+      // Respuesta exitosa
+      return respuesta.json({
+        Estatus: "Exitoso",
+        Mensaje: "Usuario creado con éxito",
+      });
+    }
+  });
+});
+
+
+// Consultar si esta asignado
+app.get("/obtenerAsignacion/:id", (req, res) => {
+  const {id}=req.params
+  const sql = "select asignacion from usuarios where id_usuario=?";
+  conexion.query(sql,[id], (error, resultados) => {
+    if (error) {
+      return res.status(500).json({ mensaje: "Error al obtener peticiones" });
+    }
+    return res.status(200).json({Estatus:"Exitoso", contenido: resultados });
+  });
+});
+
+// obtener el id del miembro con el id del usuario
+app.get("/obtenerIdMember/:id", (req, res) => {
+  const {id}=req.params
+  const sql = "select id_miembro from miembros where id_usuario_id=?";
+  conexion.query(sql,[id], (error, resultados) => {
+    if (error) {
+      return res.status(500).json({ mensaje: "Error al obtener peticiones" });
+    }
+    return res.status(200).json({Estatus:"Exitoso", contenido: resultados });
+  });
+});
+
+
+

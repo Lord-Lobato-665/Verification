@@ -7,6 +7,7 @@ import Modal from "react-modal";
 import { Alert, AlertTitle } from "@mui/material"; // Importa los componentes de Material-UI Alert
 import { jwtDecode } from "jwt-decode";
 import axios from "axios";
+import { IoMdAddCircle } from "react-icons/io";
 
 Modal.setAppElement("#root");
 
@@ -21,7 +22,14 @@ const HomeUser = () => {
   const [usuario, setUsuario] = useState([]);
   const [statetarea, setStateTarea] = useState(false);
   const [miembrotarea, setMiembroTarea] = useState([]);
+  const [idpro, setIdPro] = useState([]);
   const [idmiembro, setIdmiembro] = useState([]);
+  const [statepro, setStatePro] = useState(false);
+  const [infaddequi, setInfAddEqui] = useState({
+    nombre_equipo: "",
+    especialidad_equipo: "",
+    id_proyecto: "",
+  });
   const [infaddmem, setInfAddMen] = useState({
     id_usuario: "",
     id_equipo: "",
@@ -34,6 +42,33 @@ const HomeUser = () => {
     id_miembro: "",
   });
 
+  const enviarEquipo = async () => {
+    if (
+      infaddequi.nombre_equipo != "" &&
+      infaddequi.especialidad_equipo != ""
+    ) {
+      infaddequi.id_proyecto = idpro;
+      await axios
+        .post("http://localhost:8081/crearEquipo", infaddequi)
+        .then((res) => {
+          if (res.data.Estatus === "Exitoso") {
+            window.alert("Equipo Creado Exitosamente");
+            cerrarProyecto();
+          }
+        });
+    } else {
+      return window.alert("rellena las credenciales");
+    }
+  };
+
+  const cerrarProyecto = () => {
+    setStatePro(!statepro);
+  };
+
+  const abriProyecto = () => {
+    setStatePro(!statepro);
+  };
+
   const enviarTarea = async () => {
     fintarea.id_miembro = idmiembro;
     console.log(fintarea);
@@ -42,10 +77,10 @@ const HomeUser = () => {
         .post("http://localhost:8081/addTarea", fintarea)
         .then((res) => {
           if (res.data.Estatus === "Exitoso") {
+            window.alert("tarea creada con Éxito")
             setStateTarea(!statetarea);
           }
         });
-
     }
   };
 
@@ -100,6 +135,7 @@ const HomeUser = () => {
       window.alert("Completa los campos para crear un nuevo miembro");
     }
   };
+  useEffect(() => {}, []);
 
   useEffect(() => {
     const fetchUsuario = async () => {
@@ -118,6 +154,7 @@ const HomeUser = () => {
     };
     fetchUsuario();
   }, [usuario]);
+
   useEffect(() => {
     const fetchProyecto = async () => {
       const token = localStorage.getItem("token"); //obtener el token
@@ -129,6 +166,7 @@ const HomeUser = () => {
         );
         const data = await response.json();
         setProyectos(data.contenido);
+        setIdPro(data.contenido[0].id_proyecto);
       } catch (error) {
         console.log(error);
       }
@@ -341,7 +379,9 @@ const HomeUser = () => {
           {usuario &&
             usuario.map((e, index) => (
               <div key={index}>
-                <h2 className="titulo-equipos">Bienvenido {e.nombre_usuario}!</h2>
+                <h2 className="titulo-equipos">
+                  Bienvenido {e.nombre_usuario}!
+                </h2>
               </div>
             ))}
           {proyectos &&
@@ -353,6 +393,14 @@ const HomeUser = () => {
                 </h3>
               </div>
             ))}
+          <div>
+            <h3 className="add-team-user">Crear un Equipo</h3>
+            <IoMdAddCircle
+              size={50}
+              className="btn-add-user"
+              onClick={abriProyecto}
+            />
+          </div>
           <p>---- Equipos ----</p>
           <div className="alert-absolute">
             {/* Alerta de confirmación de eliminación */}
@@ -411,6 +459,57 @@ const HomeUser = () => {
             </div>
           ))}
         </div>
+
+        {/* modal que añade un nuevo equipo */}
+
+        <Modal
+          isOpen={statepro}
+          onRequestClose={closeModal}
+          contentLabel="Editar Equipo"
+          className="Modal-update"
+          overlayClassName="Overlay"
+        >
+          <div className="modal-content">
+            <h2>Agregar Equipo</h2>
+            <br />
+            <div>
+              <label htmlFor="">
+                Nombre Equipo
+                <input
+                  type="text"
+                  label="Ingresa un nombre para el equipo"
+                  onChange={(e) => {
+                    setInfAddEqui({
+                      ...infaddequi,
+                      nombre_equipo: e.target.value,
+                    });
+                  }}
+                />
+              </label>
+              <label htmlFor="">
+                Especialidad Equipo
+                <input
+                  type="text"
+                  label="Ingresa una especialidad"
+                  onChange={(e) => {
+                    setInfAddEqui({
+                      ...infaddequi,
+                      especialidad_equipo: e.target.value,
+                    });
+                  }}
+                />
+              </label>
+            </div>
+            <br />
+            <button className="modal-update-button" onClick={enviarEquipo}>
+              Crear Equipo
+            </button>
+            <button className="modal-cancel-button" onClick={cerrarProyecto}>
+              Cerrar
+            </button>
+          </div>
+        </Modal>
+
         {/* Modal que muestra equipo con miembros */}
         <Modal
           isOpen={showDetailsModal}

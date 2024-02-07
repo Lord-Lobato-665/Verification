@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Josefin+Sans&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Josefin+Sans&display=swap");
 
 .container-home-user {
   position: absolute;
@@ -10,12 +10,12 @@
 }
 
 .titulo-equipos {
-  font-family: 'Black Ops One', sans-serif;
+  font-family: "Black Ops One", sans-serif;
   color: rgb(104, 104, 104);
 }
 
 .subtitulo-equipos {
-  font-family: 'Black Ops One', sans-serif;
+  font-family: "Black Ops One", sans-serif;
   color: #023047;
 }
 
@@ -150,7 +150,7 @@
   height: 300px;
   margin-top: 20px;
   text-align: center;
-  align-items: center;/* 
+  align-items: center; /* 
   border: #000000 dotted; */
   justify-content: center;
   display: flex;
@@ -374,16 +374,29 @@
 .Modal-information .modal-button:active {
   background-color: #033c79;
 }
+.add-team-user {
+  margin: 0;
+  font-size: large;
+  font-weight: 900;
+}
+.btn-add-user {
+  margin-top: 15px;
+  margin-bottom: 30px;
+  cursor: pointer;
+  border-radius: 40px;
+  box-shadow: 0 0 40px 0.4px #73c98d;
+  color: #27763b;
+}
 
 .ab {
   width: 532px;
-  height: 200px;/* 
+  height: 200px; /* 
   border: white dotted; */
   position: absolute;
   top: 1px;
   left: 1px;
   font-size: 19px;
-  font-family: 'Black Ops One', sans-serif;
+  font-family: "Black Ops One", sans-serif;
 }
 
 .Modal-information .modal-content {
