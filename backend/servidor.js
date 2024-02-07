@@ -1025,3 +1025,31 @@ app.get("/peticiones", (req, res) => {
     return res.status(200).json({ peticiones: resultados });
   });
 });
+
+// marcar tarea como completa
+app.post("/marcarTarea/:id", (peticion, respuesta) => {
+  // Extracción de datos del cuerpo de la petición
+  const { id } = peticion.params;
+
+  // Consulta SQL para insertar un nuevo miembro en la base de datos
+  const sql =
+    "update tareas set id_estado_id=8 where id_tarea=?";
+
+  // Ejecución de la consulta
+  conexion.query(sql, [id], (error, resultado) => {
+    if (error) {
+      // Manejo de errores durante la inserción
+      console.error("Error al insertar un nuevo usuario: ", error);
+      return respuesta.json({
+        Estatus: "Error",
+        Error: "No se pudo crear el usuario",
+      });
+    } else {
+      // Respuesta exitosa con el ID del nuevo usuario
+      return respuesta.json({
+        Estatus: "Exitoso",
+        Mensaje: "Usuario creado con éxito",
+      });
+    }
+  });
+});

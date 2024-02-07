@@ -5,6 +5,7 @@ import { BiLogOut } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
+import useStore from "./useStore";
 
 /* 080417 */
 const HeaderHome = () => {
@@ -15,7 +16,8 @@ const HeaderHome = () => {
     navigate("/login"); // Redirige al usuario a la página de inicio de sesión
   };
 
-  const [tareas, setTareas] = useState([]);
+  const setTareas = useStore((state) => state.setTareas);
+  const tareas = useStore((state) => state.tareas);
   useEffect(() => {
     const mostrarTareas = async () => {
       const token = localStorage.getItem("token"); //obtener el token
@@ -31,7 +33,7 @@ const HeaderHome = () => {
     };
     mostrarTareas();
   }, []);
-  console.log(tareas);
+  console.log(setTareas);
 
   return (
     <>
@@ -46,16 +48,18 @@ const HeaderHome = () => {
           <li className="center">
             <Link to="/mision">Misión y visión</Link>
           </li>
-          <li className="center">
-            <Link to="/home">Proyectos</Link>
-          </li>
           {tareas.length >= 1 ? (
             <li className="center">
-              <span
-                onClick={() => navigate("/tareas", { state: { tareas } })}
-                style={{ cursor: "pointer" }}
-              >
-                Tareas
+              <span style={{ cursor: "pointer" }} className="span-home">
+                <Link to="/peticion">Petición</Link>
+              </span>
+            </li>
+          ) : null}
+
+          {tareas.length >= 1 ? (
+            <li className="center">
+              <span style={{ cursor: "pointer" }} className="span-home">
+                <Link to="/tareas">Tareas</Link>
               </span>
             </li>
           ) : null}

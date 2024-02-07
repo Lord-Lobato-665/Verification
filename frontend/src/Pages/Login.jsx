@@ -88,10 +88,10 @@ const Login = () => {
               <br />
               <br />
             <div className="cont-btn-login">
-              <button type="submit" class="button">
-                <span class="button_lg">
-                  <span class="button_sl"></span>
-                  <span class="button_text"> Comienza ahora! </span>
+              <button type="submit" className="button">
+                <span className="button_lg">
+                  <span className="button_sl"></span>
+                  <span className="button_text"> Comienza ahora! </span>
                 </span>
               </button>
             </div>
@@ -103,17 +103,17 @@ const Login = () => {
         <div className="color-one"></div>
       </div>
       <div className='deco-ab'>
-          <div class="container">
-            <div class="card">
+          <div className="container">
+            <div className="card">
               Explora tus ideas
             </div>
-            <div class="card">
+            <div className="card">
               Deja fluir tu creatividad
             </div>
-            <div class="card">
+            <div className="card">
               Maximiza tu eficiencia
             </div>
-            <div class="card">
+            <div className="card">
               Trabaja con sinergia
             </div>
           </div>

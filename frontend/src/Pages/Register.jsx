@@ -100,10 +100,10 @@ const Register = () => {
             </label>
             <br />
             <div className="cont-btn-login">
-              <button type="submit" class="button">
-                <span class="button_lg">
-                  <span class="button_sl"></span>
-                  <span class="button_text"> Registrar! </span>
+              <button type="submit" className="button">
+                <span className="button_lg">
+                  <span className="button_sl"></span>
+                  <span className="button_text"> Registrar! </span>
                 </span>
               </button>
             </div>
@@ -115,17 +115,17 @@ const Register = () => {
         <div className="color-one"></div>
       </div>
       <div className='deco-ab'>
-          <div class="container">
-            <div class="card">
+          <div className="container">
+            <div className="card">
             Descubre tu potencial
             </div>
-            <div class="card">
+            <div className="card">
             Tu próximo gran proyecto te espera
             </div>
-            <div class="card">
+            <div className="card">
              Alcanza tus metas
             </div>
-            <div class="card">
+            <div className="card">
               Únete ahora!
             </div>
           </div>
