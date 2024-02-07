@@ -116,27 +116,10 @@ function SideBarUser() {
       </div>
 
       <div className="container-buttons-user">
-        {[
-          { icon: ImUsers, text: "Equipo Nuevo" },
-          { icon: ImUser, text: "Añadir Miembros" },
-        ].map((button, index) => (
-          <div key={index}>
-            <button className="buttons-user">
-              <div className="button-content">
-                {React.createElement(button.icon)}
-                <br />
-                {button.text}
-              </div>
-              <div className="button-hover-content">
-                <FaPlus />
-              </div>
-            </button>
-          </div>
-        ))}
-
-        <Link onClick={handleLogout} className="yeye">
-          <span>Salir</span>
-          <BiLogOut className="" />
+        <Link onClick={handleLogout}>
+          <button class="btn-logout">
+            CERRAR SESIÓN <BiLogOut/>
+          </button>
         </Link>
       </div>
     </div>

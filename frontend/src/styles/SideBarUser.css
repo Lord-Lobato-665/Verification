@@ -41,6 +41,45 @@
 
 /* Sidebar Usuario */
 
+.btn-logout {
+    color: #023047;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 2px solid #023047;
+    padding: 10px 20px;
+    font-size: 17px;
+    font-weight: bold;
+    background: transparent;
+    position: relative;
+    transition: all 0.4s;
+    overflow: hidden;
+  }
+  
+  .btn-logout:hover {
+    color: white;
+  }
+
+  .btn-logout:active {
+    transform: scale(0.9);
+  }
+  
+  .btn-logout::before {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 0%;
+    top: 0;
+    left: -40px;
+    transform: skewX(45deg);
+    background-color: #023047;
+    z-index: -1;
+    transition: all 1s;
+  }
+  
+  .btn-logout:hover::before {
+    width: 160%;
+  }
+
 .rec-user {
     display: flex;
     color: black;
