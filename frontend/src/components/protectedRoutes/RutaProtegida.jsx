@@ -4,7 +4,6 @@ import { jwtDecode } from "jwt-decode";
 const RutaProtegida = ({ children }) => {
   const token = localStorage.getItem("token");
   const location = useLocation();
-
   if (!token) {
     // No hay token, redirige al login
     return <Navigate to="/login" state={{ from: location }} replace />;

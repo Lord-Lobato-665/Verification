@@ -34,8 +34,7 @@ const Login = () => {
 
       // Aquí manejas la respuesta y rediriges al usuario
       const { token, path } = response.data;
-      console.log(token);
-      console.log(path);
+      
 
       // Guardar token en localStorage o en un estado global con Context o Redux
       localStorage.setItem('token', token);

@@ -6,6 +6,7 @@ import bcrypt from "bcrypt";
 import { jwtDecode } from "jwt-decode";
 import fs from "fs";
 import htttps from "https";
+import { Console, log } from "console";
 
 const app = express();
 app.use(express.json());
@@ -95,6 +96,9 @@ app.post("/login", (req, res) => {
             "yourSecretKey",
             { expiresIn: "1h" }
           );
+    
+
+
 
           // Send the token and the path to the client
           res.json({ token, path });
@@ -104,26 +108,16 @@ app.post("/login", (req, res) => {
   );
 });
 
-/* // Middleware para verificar si el rol es Admin
-function verificarAdmin(req, res, next) {
-  verificarToken(req, res, () => {
-    if (req.authData.role === "Admin") {
-      next();
-    } else {
-      res.sendStatus(403);
-    }
-  });
-}
 
-// Ruta solo para Admins
-app.get("/rutaAdmin", verificarAdmin, (req, res) => {
-  // Lógica de la ruta solo para Admin
-});
+
+
+ 
+
 
 // Ruta para cualquier usuario autenticado
 app.get("/rutaUsuario", verificarToken, (req, res) => {
   // Lógica de la ruta para cualquier usuario autenticado
-}); */
+}); 
 
 app.post("/register", (req, res) => {
   // Obtén los datos del usuario desde el cuerpo de la solicitud
@@ -437,11 +431,11 @@ function verificarToken(req, res, next) {
 app.delete("/eliminarUsuario/:id", (peticion, respuesta) => {
   // Extracción del id del usuario desde los parámetros de la ruta
   const { id } = peticion.params;
-  console.log("ANTES DE LA FUNCION");
+ 
 
   // Obtén el ID del usuario autenticado desde el token
   const usuarioAutenticadoId = obtenerIdUsuarioDesdeToken(peticion);
-  console.log(usuarioAutenticadoId, "despues de la funcion");
+ 
 
   // Verifica si el usuario que intenta eliminar es el mismo que está autenticado
   if (usuarioAutenticadoId == id) {
@@ -548,8 +542,7 @@ app.post("/crearMiembro", (peticion, respuesta) => {
 // Eliminar un miembro
 app.delete("/eliminarMiembro/:id", (peticion, respuesta) => {
   const { id } = peticion.params;
-  console.log(typeof id);
-
+ 
   // Consulta SQL para eliminar un usuario de la base de datos
   const sql = "CALL EliminarMiembroYActualizarAsignacion(?)";
 
@@ -1055,6 +1048,34 @@ app.post("/marcarTarea/:id", (peticion, respuesta) => {
 
   // Consulta SQL para insertar un nuevo miembro en la base de datos
   const sql = "update tareas set id_estado_id=8 where id_tarea=?";
+
+  // Ejecución de la consulta
+  conexion.query(sql, [id], (error, resultado) => {
+    if (error) {
+      // Manejo de errores durante la inserción
+      console.error("Error al insertar un nuevo usuario: ", error);
+      return respuesta.json({
+        Estatus: "Error",
+        Error: "No se pudo crear el usuario",
+      });
+    } else {
+      // Respuesta exitosa con el ID del nuevo usuario
+      return respuesta.json({
+        Estatus: "Exitoso",
+        Mensaje: "Usuario creado con éxito",
+      });
+    }
+  });
+});
+
+
+// marcar tarea como pendiente
+app.post("/marcarTareaPendiente/:id", (peticion, respuesta) => {
+  // Extracción de datos del cuerpo de la petición
+  const { id } = peticion.params;
+
+  // Consulta SQL para insertar un nuevo miembro en la base de datos
+  const sql = "update tareas set id_estado_id=12 where id_tarea=?";
 
   // Ejecución de la consulta
   conexion.query(sql, [id], (error, resultado) => {

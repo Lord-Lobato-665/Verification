@@ -105,3 +105,39 @@
     width: 150px; 
 }
 
+.modal-cancel-button {
+    border: white solid 1px;
+    background-color: red;
+    color: white;
+    font-weight: lighter;
+    width: 100px;
+    height: 40px;
+    border-radius: 4px;
+    margin-left: 40px;
+}
+
+.modal-cancel-button:hover {
+    background-color: rgb(194, 3, 3);
+}
+
+.modal-cancel-button:active {
+    background-color: rgb(154, 3, 3);
+}
+
+.modal-acept-button {
+    border: white solid 1px;
+    background-color: green;
+    color: white;
+    font-weight: lighter;
+    width: 100px;
+    height: 40px;
+    border-radius: 4px;
+}
+
+.modal-acept-button:hover {
+    background-color: rgb(0, 110, 0);
+}
+
+.modal-acept-button:active {
+    background-color: rgb(0, 89, 0);
+}

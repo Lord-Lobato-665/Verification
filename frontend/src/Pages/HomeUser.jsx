@@ -77,7 +77,7 @@ const HomeUser = () => {
         .post("http://localhost:8081/addTarea", fintarea)
         .then((res) => {
           if (res.data.Estatus === "Exitoso") {
-            window.alert("tarea creada con Éxito")
+            window.alert("tarea creada con Éxito");
             setStateTarea(!statetarea);
           }
         });
@@ -225,7 +225,6 @@ const HomeUser = () => {
       }
 
       const data = await response.json();
-      console.log("Respuesta del servidor:", data);
 
       if (data.Estatus === "Exitoso") {
         setSelectedTeam({ ...team, miembros: data.contenido });

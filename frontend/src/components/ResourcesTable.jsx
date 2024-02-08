@@ -18,7 +18,7 @@ const ResourcesTable = () => {
         const data = await response.json();
         if (data.Estatus === "Exitoso") {
           setResources(data.contenido);
-          console.log(data.contenido);
+         
         } else {
           console.log("La respuesta no fue exitosa.");
         }

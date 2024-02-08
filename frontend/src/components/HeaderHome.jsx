@@ -21,14 +21,32 @@ const HeaderHome = () => {
     id_miembro: "",
   });
   const [idmem, setIdMem] = useState([]);
-  const actutarea = async (id) => {
-    console.log(id);
-    console.log(tareas);
+  const marcarTarea = async (id) => {
     await axios.post(`http://localhost:8081/marcarTarea/${id}`).then((res) => {
       if (res.data.Estatus === "Exitoso") {
         window.alert("Tarea entregada Exitosamente");
       }
     });
+  };
+
+  const getTaskColor = (estado) => {
+    switch (estado) {
+      case "Asignada":
+        return "#219ebc"; // Naranja para contraseña normal
+      case "Completado":
+        return "green"; //
+      default:
+        return "black"; // Negro por defecto
+    }
+  };
+  const desmarcarTarea = async (id) => {
+    await axios
+      .post(`http://localhost:8081/marcarTareaPendiente/${id}`)
+      .then((res) => {
+        if (res.data.Estatus === "Exitoso") {
+          window.alert("Tarea desmarcada Exitosamente");
+        }
+      });
   };
 
   const abrirPeticion = () => {
@@ -81,7 +99,6 @@ const HeaderHome = () => {
         const asig = data.contenido[0].asignacion;
         setPeticiones(asig);
         if (asig != null) {
-          console.log("hey tiene equipo");
           const res = await fetch(
             `http://localhost:8081/obtenerIdMember/${id}`
           );
@@ -97,7 +114,6 @@ const HeaderHome = () => {
 
   const enviarPeticion = async () => {
     peticion.id_miembro = idmem;
-    console.log(peticion);
     await axios
       .post("http://localhost:8081/addPeticion", peticion)
       .then((res) => {
@@ -159,7 +175,7 @@ const HeaderHome = () => {
               borderRadius: 8,
               boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)",
               // Asegúrate de limitar el ancho y el alto si es necesario
-              maxWidth: "600px",
+              Width: "700px",
               maxHeight: "100%",
               overflow: "auto", // Añade scroll si el contenido es muy largo
             }}
@@ -167,7 +183,12 @@ const HeaderHome = () => {
             <div className="box-tar-user">
               {tareas.map((e) => (
                 <div key={e.id_tarea} className="cart-tar-user">
-                  <div className="header-tarea">Tarea</div>
+                  <div
+                    className="header-tarea"
+                    style={{ background: getTaskColor(e.nombre_estado) }}
+                  >
+                    Tarea
+                  </div>
                   <div className="name-tar-user">
                     <span className="span-name">Nombre de la tarea:</span>
                     <p>{e.nombre_tarea}</p>
@@ -184,18 +205,27 @@ const HeaderHome = () => {
                     <span className="span-name">Marcar completado:</span>
                     <br />
                     <button
-                      className="btn-tarea"
+                      className="finish-task "
                       onClick={() => {
-                        actutarea(e.id_tarea);
+                        marcarTarea(e.id_tarea);
                       }}
                     >
-                      Terminar
+                      Marcar
+                    </button>
+                    <button
+                      style={{ margin: 10 }}
+                      className="finish-task "
+                      onClick={() => {
+                        desmarcarTarea(e.id_tarea);
+                      }}
+                    >
+                      Desmarcar
                     </button>
                   </div>
                 </div>
               ))}
             </div>
-            <button className="modal-cancel-button" onClick={cerrarTarea}>
+            <button className="modal-cancel-task-button" onClick={cerrarTarea}>
               Cerrar
             </button>
           </div>
@@ -214,17 +244,19 @@ const HeaderHome = () => {
               top: "50%",
               left: "50%",
               transform: "translate(-50%, -50%)",
-              backgroundColor: "white",
+              backgroundColor: "#023047",
               padding: 20,
               borderRadius: 8,
               boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)",
-              // Asegúrate de limitar el ancho y el alto si es necesario
-              maxWidth: "600px",
+              maxWidth: "240px",
               maxHeight: "100%",
               overflow: "auto", // Añade scroll si el contenido es muy largo
+              border: "2px solid white",
+              justifyContent: "center",
+              color: "white",
             }}
           >
-            <div className="box-tar-user">
+            <div className="box-pet-user">
               <div>
                 <h4>Crear Petición</h4>
                 <label htmlFor="">Nombre de la Peticion</label>
@@ -249,7 +281,9 @@ const HeaderHome = () => {
                 />
               </div>
             </div>
-            <button onClick={enviarPeticion}>Enviar Peticion</button>
+            <button onClick={enviarPeticion} className="modal-acept-button">
+              Enviar Peticion
+            </button>
             <button className="modal-cancel-button" onClick={cerrarPeticion}>
               Cerrar
             </button>
