@@ -1149,9 +1149,9 @@ app.get("/obtenerIdMember/:id", (req, res) => {
   });
 });
 
-// Código de verificación
+// Código de verificación ----------------------------------------------------------------------------------------------------
 
-const nodemailer = require('nodemailer');
+import nodemailer from 'nodemailer';
 
 const transporter = nodemailer.createTransport({
   service: 'Gmail',
@@ -1188,25 +1188,29 @@ app.post("/sendverificationcode", async (req, res) => {
 
 
 app.post('/verify', async (req, res) => {
-  const { correo_usuario, codigo_verificacion } = req.body;
+  const { correo_usuario, contraseña_usuario, codigo_verificacion } = req.body;
 
-  const sql = "SELECT * FROM usuarios WHERE correo_usuario = ? AND codigo_verificacion = ?";
-  conexion.query(sql, [correo_usuario, codigo_verificacion], (error, results) => {
+  // Verifica si el correo, la contraseña y el código de verificación son válidos
+  const sql = `SELECT * FROM usuarios WHERE correo_usuario = ? AND contraseña_usuario = ? AND codigo_verificacion = ?`;
+  conexion.query(sql, [correo_usuario, contraseña_usuario, codigo_verificacion], (error, results) => {
     if (error) {
-      console.error('Error al verificar el código de verificación:', error);
-      res.status(500).json({ message: 'Error al verificar el código de verificación' });
+      console.error('Error al verificar las credenciales:', error);
+      res.status(500).json({ message: 'Error al verificar las credenciales' });
     } else {
       if (results.length > 0) {
-        // Si se encuentra una fila en la tabla usuarios con el correo y el código de verificación proporcionados,
-        // significa que el código de verificación es válido
-        res.status(200).json({ message: 'Código de verificación válido' });
+        // Si se encuentra una fila en la tabla usuarios con las credenciales y el código de verificación proporcionados,
+        // significa que son válidos
+        const token = generateToken(correo_usuario); // Genera un token de autenticación
+        res.status(200).json({ token, path: '/dashboard' });
       } else {
-        // Si no se encuentra ninguna fila, significa que el código de verificación no es válido
-        res.status(401).json({ message: 'Código de verificación no válido' });
+        // Si no se encuentra ninguna fila, significa que las credenciales o el código de verificación no son válidos
+        res.status(401).json({ message: 'Las credenciales o el código de verificación no son válidos' });
       }
     }
   });
 });
+
+
 
 
 

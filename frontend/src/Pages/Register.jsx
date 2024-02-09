@@ -46,11 +46,11 @@ const Register = () => {
   const passwor = (e) => {
     const { value } = e.target;
     console.log(value);
-    if (value.length <= 2) {
+    if (value.length <= 4) {
       setError("contraseña Debil");
-    } else if (value.length <= 4) {
+    } else if (value.length <= 6) {
       setError("contraseña Normal");
-    } else if (value.length > 4) {
+    } else if (value.length > 8) {
       setError("contraseña Buena");
     }
     setUser({

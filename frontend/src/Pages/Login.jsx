@@ -23,27 +23,28 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     if (!email || !password || !verificationCode) {
       alert('Por favor, rellena todos los campos.');
       return;
     }
-
+  
     try {
       const response = await axios.post('http://localhost:8081/verify', {
         correo_usuario: email,
+        contraseña_usuario: password,
         codigo_verificacion: verificationCode
       });
-
+  
       const { token, path } = response.data;
-
+  
       localStorage.setItem('token', token);
-
+  
       navigate(path);
     } catch (error) {
       alert('Las credenciales o el código de verificación no son válidos.');
     }
-  };
+  };  
 
   const handleSendVerificationCode = async () => {
     try {
