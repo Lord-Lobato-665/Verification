@@ -12,6 +12,7 @@
 .titulo-equipos {
   font-family: "Black Ops One", sans-serif;
   color: rgb(104, 104, 104);
+  text-transform: uppercase;
 }
 
 .subtitulo-equipos {
@@ -147,7 +148,7 @@
 
 .project-view-container {
   width: 1080px;
-  height: 300px;
+  height: 244px;
   margin-top: 20px;
   text-align: center;
   align-items: center; /* 
@@ -234,7 +235,7 @@
 .Modal-update {
   position: absolute;
   width: 400px;
-  height: 500px;
+  height: 540px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -280,7 +281,7 @@
 
 .Modal-update .modal-content {
   background-color: #ffffff; /* Fondo del modal */
-  padding: 20px 20px 120px 20px;
+  padding: 20px 20px 90px 20px;
   border-radius: 8px;
   color: #000000; /* Color del texto en el modal */
 }
@@ -380,12 +381,20 @@
   font-weight: 900;
 }
 .btn-add-user {
-  margin-top: 15px;
-  margin-bottom: 30px;
+  margin-top: 4px;
+  margin-bottom: 10px;
   cursor: pointer;
-  border-radius: 40px;
-  box-shadow: 0 0 40px 0.4px #73c98d;
-  color: #27763b;
+  color: #018b23;
+  transition: 0.3s;
+}
+
+.btn-add-user:hover {
+  color: #00731d;
+}
+
+.btn-add-user:active {
+  color: #004b13;
+  transform: scale(0.8);
 }
 
 .ab {

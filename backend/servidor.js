@@ -1149,5 +1149,64 @@ app.get("/obtenerIdMember/:id", (req, res) => {
   });
 });
 
+// Código de verificación
+
+const nodemailer = require('nodemailer');
+
+const transporter = nodemailer.createTransport({
+  service: 'Gmail',
+  auth: {
+    user: 'gaelsanchez509@gmail.com',
+    pass: 'pfbp viyl dryu avhz',
+  },
+});
+
+// Ruta para enviar el código de verificación por correo electrónico
+app.post("/sendverificationcode", async (req, res) => {
+  const { correo_usuario } = req.body;
+
+  // Genera un código de verificación de 6 dígitos
+  const verificationCode = Math.floor(100000 + Math.random() * 900000);
+
+  // Configura las opciones del correo electrónico
+  const mailOptions = {
+    from: 'gaelsanchez509@gmail.com',
+    to: correo_usuario,
+    subject: 'Código de Verificación',
+    text: `Tu código de verificación es: ${verificationCode}`,
+  };
+
+  try {
+    // Envía el correo electrónico con el código de verificación
+    await transporter.sendMail(mailOptions);
+    res.status(200).send('Código de verificación enviado por correo electrónico.');
+  } catch (error) {
+    console.error('Error al enviar el correo electrónico:', error);
+    res.status(500).send('Error al enviar el código de verificación por correo electrónico.');
+  }
+});
+
+
+app.post('/verify', async (req, res) => {
+  const { correo_usuario, codigo_verificacion } = req.body;
+
+  const sql = "SELECT * FROM usuarios WHERE correo_usuario = ? AND codigo_verificacion = ?";
+  conexion.query(sql, [correo_usuario, codigo_verificacion], (error, results) => {
+    if (error) {
+      console.error('Error al verificar el código de verificación:', error);
+      res.status(500).json({ message: 'Error al verificar el código de verificación' });
+    } else {
+      if (results.length > 0) {
+        // Si se encuentra una fila en la tabla usuarios con el correo y el código de verificación proporcionados,
+        // significa que el código de verificación es válido
+        res.status(200).json({ message: 'Código de verificación válido' });
+      } else {
+        // Si no se encuentra ninguna fila, significa que el código de verificación no es válido
+        res.status(401).json({ message: 'Código de verificación no válido' });
+      }
+    }
+  });
+});
+
 
 

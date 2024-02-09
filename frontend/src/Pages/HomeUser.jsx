@@ -8,6 +8,7 @@ import { Alert, AlertTitle } from "@mui/material"; // Importa los componentes de
 import { jwtDecode } from "jwt-decode";
 import axios from "axios";
 import { IoMdAddCircle } from "react-icons/io";
+import { MdGroupAdd } from "react-icons/md";
 
 Modal.setAppElement("#root");
 
@@ -371,7 +372,6 @@ const HomeUser = () => {
   return (
     <>
       <SideBarUser />
-      <HeaderUser />
       <div className="container-home-user">
         <br />
         <div>
@@ -394,8 +394,8 @@ const HomeUser = () => {
             ))}
           <div>
             <h3 className="add-team-user">Crear un Equipo</h3>
-            <IoMdAddCircle
-              size={50}
+            <MdGroupAdd
+              size={60}
               className="btn-add-user"
               onClick={abriProyecto}
             />
